@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: speciality-service
+  data:
+    mongodb:
+      authentication-database: admin
+      username: samir
+      password: pass
+      port: 27017
+      host: localhost
+      database: medhead
+server:
+  port: 9000
