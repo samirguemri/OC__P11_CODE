@@ -28,7 +28,6 @@ public record DestinationService(
         NotificationClient notificationClient,
         Gson gson
 ) {
-    @Value("${google.maps.api-key}")
     private static final String googleMapsApiKey = "AIzaSyCDE4qwwbeKMVOsBPtE4lsNjYrRohyIATQ";
 
     //RouteMatrixRequest routeMatrixRequest
@@ -79,14 +78,13 @@ public record DestinationService(
 
         HospitalResponse selectedHospital = hospitalResponses.get(nearestHospital.destinationIndex());
 
-        /* Send notification to the hospital
-        ResponseEntity response = notificationClient.sendNotification(buildNotificationRequest(selectedHospital.hospitalRef(), destinationRequest.speciality()));
+        // Send notification to the hospital
+        ResponseEntity<String> response = notificationClient.sendNotification(buildNotificationRequest(selectedHospital.hospitalRef(), destinationRequest.speciality()));
         if (response.getStatusCode().is2xxSuccessful()) {
             log.info("Notification sent to the selected hospital {}", selectedHospital);
         } else {
-            log.info("issue in sending notification to the selected hospital");
-        }*/
-
+            log.info("Issue in sending notification to the selected hospital");
+        }
         return selectedHospital;
     }
 

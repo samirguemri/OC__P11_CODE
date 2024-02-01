@@ -4,10 +4,11 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      username: samir
-      password: pass
+      username: rootuser
+      password: rootpass
       port: 27017
       host: localhost
       database: medhead
+
 server:
   port: 9000

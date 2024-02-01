@@ -16,11 +16,13 @@ public record NotificationController(
         NotificationService notificationService
 ) {
 
-    public static final String TOPIC = "hospitalReservation";
-
-    @PutMapping("/send")
-    public ResponseEntity sendNotification(@RequestBody NotificationRequest notification) throws InterruptedException {
-        notificationService.sendNotification(TOPIC, notification);
-        return new ResponseEntity<>(Map.of("message", "notification sent"), HttpStatus.OK);
+    @PostMapping("/send")
+    public ResponseEntity<String> sendNotification(@RequestBody NotificationRequest notification) throws InterruptedException {
+        Boolean sent = notificationService.sendNotification(notification);
+        if (sent) {
+            return ResponseEntity.status(HttpStatus.OK).body("Notification sent with success");
+        } else {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Can't sent notification");
+        }
     }
 }

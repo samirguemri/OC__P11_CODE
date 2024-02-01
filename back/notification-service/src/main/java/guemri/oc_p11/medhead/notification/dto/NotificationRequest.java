@@ -8,4 +8,10 @@ public record NotificationRequest(
         String specialityCode,
         Integer number
 ) {
+    @Override
+    public String toString() {
+        return "Notification [ hospitalRef = " + hospitalRef + ", " +
+                "specialityCode = " + specialityCode + "," +
+                " number of bed = " + number + " ]";
+    }
 }

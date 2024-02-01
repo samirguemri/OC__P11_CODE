@@ -4,14 +4,16 @@ spring:
 
 server:
   port: 8443
-#  servlet:
-#    context-path: /api/v1/destination
   ssl:
     enabled: true
     key-store: classpath:localSSL.jks
     key-store-password: medhead
     key-store-type: PKCS12
     key-alias: medhead
+
+app:
+  cors:
+    allowed-origins: https://localhost:3443,http://localhost:3000
 
 google:
   maps:

@@ -1,5 +1,6 @@
 package guemri.oc_p11.medhead.destination.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,21 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
 public class WebConfiguration {
+
+    @Bean
+    public CorsFilter corsFilter(@Value("${app.cors.allowed-origins}") List<String> allowedOrigins) {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOriginPatterns(allowedOrigins);
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+/*
 
     private static final Long MAX_AGE = 3600L; // 30min
     private static final int CORS_FILTER_ORDER = -102;
@@ -46,5 +60,6 @@ public class WebConfiguration {
         config.setAllowedMethods(List.of(HttpMethod.POST.name()));
         config.setMaxAge(MAX_AGE);
         return config;
-    }
+    }*/
+
 }
