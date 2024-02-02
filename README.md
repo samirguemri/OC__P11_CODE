@@ -34,13 +34,15 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 ## Prérequis
 
-- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://docs.docker.com/get-docker/)
+- [`Docker Compose`](https://docs.docker.com/compose/install/)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ## Lancement des applications
 
-- **docker**
+- **docker compose**
+
   - Ouvrir un `terminal` et, depuis le dossier root qui contien le fichier docker-compose.yaml, executer la commande
 
     ```
@@ -49,26 +51,53 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 - **notification-service**
 
-    Depuis un terminal, executer la commande suivante
+  Depuis un terminal, executer la commande suivante
+
+  ```
+  docker exec -it kafka bash
+  ```
+
+  ensuite, executer la commande suivante depuis le `bash`
+
+  ```
+  kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+  ```
+
+- **medhead-ui**
+
+  - Ouvrir un `terminal` et, depuis le dossier `front/medhead-ui/`, executer la commande
 
     ```
-    docker exec -it kafka bash
+    npm install
     ```
-    ensuite, executer la commande suivante depuis le `bash`
+
+  - Pour lancer l'application `medhead-ui`
 
     ```
-    kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+    npm start
     ```
+
+  - Accéder à l'adresse [`https://localhost:3443`]
+
+  - Pour une première connexion, cette page apparet
+
+  ![readme-ui-1](ressource/images/readme-ui-1.png)
+
+  - Cliquer sur `Paramètres avancés` > `Continuer vers le site localhost (dangereux)`
+
+  vous devez voir ceci
+
+  ![readme-ui-2](ressource/images/readme-ui-2.png)
 
 ## Arrêt des applications
 
-  - Pour arrêter les services backend `speciality-service`, `hospital-service`, `destination-service` et `notification-service`, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
+- Pour arrêter les services backend `speciality-service`, `hospital-service`, `destination-service` et `notification-service`, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
 
-  - Pour arrêter les `containers`
+- Pour arrêter les `containers`
 
-    ```
-    docker compose down
-    ```
+  ```
+  docker compose down
+  ```
 
 ## Creation d'une `self-signed certificate`
 
