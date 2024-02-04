@@ -25,18 +25,19 @@ pipeline {
     }
     stage('Run tests') {
       steps {
-        //sh ''
+        sh 'echo Run tests'
       }
     }
     stage('Build artifacts') {
       steps {
         //sh 'mvn clean package'
-        //sh ''
+        sh 'echo Build artifacts'
       }
     }
     stage('Deploy artifacts') {
       steps {
         //sh 'curl http://localhost:3000/param?query=demo | jq'
+        sh 'echo Deploy artifacts'
       }
     }
   }
