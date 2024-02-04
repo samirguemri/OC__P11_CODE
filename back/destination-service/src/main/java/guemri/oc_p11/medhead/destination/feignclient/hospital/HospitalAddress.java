@@ -1,9 +1,5 @@
 package guemri.oc_p11.medhead.destination.feignclient.hospital;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public record HospitalAddress(
         String numberAndStreet,
         String locality,

@@ -11,7 +11,6 @@ import guemri.oc_p11.medhead.destination.feignclient.routingapi.RouteMatrixReque
 import guemri.oc_p11.medhead.destination.feignclient.hospital.HospitalResponse;
 import guemri.oc_p11.medhead.destination.dto.DestinationRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

@@ -26,6 +26,7 @@ pipeline {
     stage('Run tests') {
       steps {
         sh 'echo Run tests'
+        //sh 'mvn clean test'
       }
     }
     stage('Build artifacts') {

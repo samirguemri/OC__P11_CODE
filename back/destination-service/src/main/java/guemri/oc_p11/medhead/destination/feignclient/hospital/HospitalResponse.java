@@ -1,6 +1,5 @@
 package guemri.oc_p11.medhead.destination.feignclient.hospital;
 
-import guemri.oc_p11.medhead.destination.feignclient.hospital.SpecialityResponse;
 import lombok.Builder;
 
 import java.util.List;
