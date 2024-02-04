@@ -37,9 +37,20 @@ L'application est composée de 5 services qui communiqueront entre eux :
 - [`Docker`](https://docs.docker.com/get-docker/)
 - [`Docker Compose`](https://docs.docker.com/compose/install/)
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
+- [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [`Jenkins`](https://www.jenkins.io/doc/book/installing/)
 
 ## Lancement des applications
+
+1. Cloner le projet en local
+
+   ```
+    git clone https://github.com/samirguemri/OC__P11_CODE.git
+    cd OC__P11_CODE
+   ```
+
+2. Installer les dépendances et Créer les packages
 
 - **docker compose**
 
@@ -88,6 +99,16 @@ L'application est composée de 5 services qui communiqueront entre eux :
   vous devez voir ceci
 
   ![readme-ui-2](ressource/images/readme-ui-2.png)
+
+- **Jenkins**
+
+  - You can start the Jenkins service with the command:
+
+    ```
+    sudo systemctl start jenkins
+    ```
+
+    The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
 
 ## Arrêt des applications
 
