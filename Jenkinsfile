@@ -1,51 +1,69 @@
 pipeline {
-  agent any
-  stages {
-    stage("verify tooling") {
-      steps {
-        sh '''
-          docker version
-          docker info
-          docker compose version
-          curl --version
-          jq --version
-        '''
-      }
+    agent any
+    stages {
+        stage("verify tooling") {
+            steps {
+                sh '''
+                docker version
+                docker info
+                docker compose version
+                curl --version
+                jq --version
+                '''
+            }
+        }
+        stage('Prune Docker data') {
+            steps {
+                sh 'docker system prune -a --volumes -f'
+            }
+        }
+        stage('Build and Package speciality-service') {
+            steps {
+                script {
+                    dir('speciality-service') {
+                        sh 'mvn clean package -DskipTests'
+                    }
+                }
+            }
+        }
+        stage('Start container') {
+            steps {
+                sh 'docker compose up -d --no-color --wait'
+                sh 'docker compose ps'
+            }
+        }
+        stage('Run tests') {
+            steps {
+                sh 'echo Run tests'
+                //sh 'mvn clean test'
+            }
+        }
+        stage('Deploy artifacts') {
+            steps {
+                //sh 'curl http://localhost:3000/param?query=demo | jq'
+                sh 'echo Deploy artifacts'
+            }
+        }
+        stage('Integration Tests') {
+            steps {
+                script {
+                    // Implement your integration test commands here
+                    // This could involve calling your services' endpoints to check their interaction with MongoDB and Kafka
+                    echo 'Running integration tests...'
+                }
+            }
+        }
     }
-    stage('Prune Docker data') {
-      steps {
-        sh 'docker system prune -a --volumes -f'
-      }
+    post {
+        always {
+            sh 'docker compose down --remove-orphans -v'
+            sh 'docker compose ps'
+        }
+        success {
+            echo 'Build was successful!'
+        }
+        failure {
+            echo 'Build failed.'
+        }
     }
-    stage('Start container') {
-      steps {
-        sh 'docker compose up -d --no-color --wait'
-        sh 'docker compose ps'
-      }
-    }
-    stage('Run tests') {
-      steps {
-        sh 'echo Run tests'
-        //sh 'mvn clean test'
-      }
-    }
-    stage('Build artifacts') {
-      steps {
-        //sh 'mvn clean package'
-        sh 'echo Build artifacts'
-      }
-    }
-    stage('Deploy artifacts') {
-      steps {
-        //sh 'curl http://localhost:3000/param?query=demo | jq'
-        sh 'echo Deploy artifacts'
-      }
-    }
-  }
-  post {
-    always {
-      sh 'docker compose down --remove-orphans -v'
-      sh 'docker compose ps'
-    }
-  }
 }
