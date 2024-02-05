@@ -26,17 +26,17 @@ services:
     depends_on:
       - mongodb
 
-  hospital-serice:
-    build:
-      context: ./back/hospital-service
-      dockerfile: Dockerfile
-    container_name: hospital-serice
-    ports:
-      - "9443:9443"
-    expose:
-      - 9443
-    depends_on:
-      - mongodb
+  # hospital-serice:
+  #   build:
+  #     context: ./back/hospital-service
+  #     dockerfile: Dockerfile
+  #   container_name: hospital-serice
+  #   ports:
+  #     - "9443:9443"
+  #   expose:
+  #     - 9443
+  #   depends_on:
+  #     - mongodb
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
