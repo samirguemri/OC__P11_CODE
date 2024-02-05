@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Build and Package speciality-service') {
             steps {
-                dir('speciality-service') {
+                dir('back/speciality-service') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
