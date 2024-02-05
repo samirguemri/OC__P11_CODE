@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
-@RequestMapping("api/v1/specialities")
+@RequestMapping("api/v1/docker")
 public record SpecialityController(SpecialityService specialityService) {
 
     @PostMapping("/post")

@@ -17,9 +17,18 @@ pipeline {
                 sh 'docker system prune -a --volumes -f'
             }
         }
-        stage('Build and Package speciality-service') {
+        stage('Build and Package services') {
             steps {
                 dir('back/speciality-service') {
+                    sh 'mvn clean package -DskipTests'
+                }
+                dir('back/hospital-service') {
+                    sh 'mvn clean package -DskipTests'
+                }
+                dir('back/destination-service') {
+                    sh 'mvn clean package -DskipTests'
+                }
+                dir('back/notification-service') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
@@ -31,7 +40,7 @@ pipeline {
         }
         stage('Start containers') {
             steps {
-                sh 'docker compose up -d --no-color --wait'
+                sh 'docker compose up -d --wait'
                 sh 'docker compose ps'
             }
         }

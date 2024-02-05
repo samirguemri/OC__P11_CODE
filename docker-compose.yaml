@@ -14,11 +14,9 @@ services:
         source: mongodb_volume
         target: /data/db
 
-  speciality-serice:
-    build:
-      context: ./back/speciality-service
-      dockerfile: Dockerfile
-    container_name: speciality-serice
+  speciality-service:
+    build: ./back/speciality-service
+    container_name: speciality-service
     ports:
       - "9443:9443"
     expose:
@@ -26,17 +24,42 @@ services:
     depends_on:
       - mongodb
 
-  # hospital-serice:
-  #   build:
-  #     context: ./back/hospital-service
-  #     dockerfile: Dockerfile
-  #   container_name: hospital-serice
-  #   ports:
-  #     - "9443:9443"
-  #   expose:
-  #     - 9443
-  #   depends_on:
-  #     - mongodb
+  hospital-service:
+    build:
+      context: ./back/hospital-service
+      dockerfile: Dockerfile
+    container_name: hospital-service
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    depends_on:
+      - speciality-service
+
+  destination-service:
+    build:
+      context: ./back/destination-service
+      dockerfile: Dockerfile
+    container_name: destination-service
+    ports:
+      - "8443:8443"
+    expose:
+      - 8443
+    depends_on:
+      - hospital-service
+
+  notification-service:
+    build:
+      context: ./back/notification-service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "8090:8090"
+    expose:
+      - 8090
+    depends_on:
+      - destination-service
+      - kafka
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
