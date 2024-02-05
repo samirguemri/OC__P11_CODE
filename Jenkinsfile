@@ -19,14 +19,17 @@ pipeline {
         }
         stage('Build and Package speciality-service') {
             steps {
-                script {
-                    dir('speciality-service') {
-                        sh 'mvn clean package -DskipTests'
-                    }
+                dir('speciality-service') {
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
-        stage('Start container') {
+        stage('Build Docker images') {
+            steps {
+                sh 'docker-compose build'
+            }
+        }
+        stage('Start containers') {
             steps {
                 sh 'docker compose up -d --no-color --wait'
                 sh 'docker compose ps'
