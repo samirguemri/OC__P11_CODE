@@ -110,6 +110,16 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
     The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
 
+- **Kubernetes**
+
+  - minikube
+
+  '''
+  minikube start --driver=docker
+  '''
+
+- **ArgoCD**
+
 ## Arrêt des applications
 
 - Pour arrêter les services backend `speciality-service`, `hospital-service`, `destination-service` et `notification-service`, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
