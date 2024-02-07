@@ -7,7 +7,6 @@ pipeline {
         RELEASE = "1.0.0"
         DOCKER_USER = "samirguemri"
         DOCKER_PASS = "dockerhub-token"
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
     stages {
@@ -82,23 +81,37 @@ pipeline {
             steps {
                 script {
                     dir('back/speciality-service') {
-                        docker_image = docker.build("${IMAGE_NAME}")
+                        docker_image = docker.build("${DOCKER_USER}" + "/speciality-service")
+                        docker.withRegistry('',DOCKER_PASS) {
+                            docker_image.push("${IMAGE_TAG}")
+                            docker_image.push('latest')
+                        }
+                    }
+
+                    dir('back/hospital-service') {
+                        docker_image = docker.build("${DOCKER_USER}" + "/hospital-service")
+                        docker.withRegistry('',DOCKER_PASS) {
+                            docker_image.push("${IMAGE_TAG}")
+                            docker_image.push('latest')
+                        }
+                    }
+
+                    dir('back/destination-service') {
+                        docker_image = docker.build("${DOCKER_USER}" + "/destination-service")
+                        docker.withRegistry('',DOCKER_PASS) {
+                            docker_image.push("${IMAGE_TAG}")
+                            docker_image.push('latest')
+                        }
+                    }
+
+                    dir('back/notification-service') {
+                        docker_image = docker.build("${DOCKER_USER}" + "/notification-service")
                         docker.withRegistry('',DOCKER_PASS) {
                             docker_image.push("${IMAGE_TAG}")
                             docker_image.push('latest')
                         }
                     }
                 }
-                // dockerfile {
-                //     filename 'Dockerfile'
-                //     dir 'back/speciality-service'
-                //     label 'medhead'
-                //     label 'speciality-service'
-                //     additionalBuildArgs  "--build-arg version=${RELEASE}"
-                //     // args "-v /tmp:/tmp"
-                //     registryUrl 'https://hub.docker.com/samirguemri/'
-                //     registryCredentialsId 'dockerhub-token'
-                // }
             }
         }
 
@@ -119,10 +132,11 @@ pipeline {
         }
     }
     post {
-        // always {
-        //     sh 'docker compose down --remove-orphans -v'
-        //     sh 'docker compose ps'
-        // }
+        always {
+            //sh 'docker compose down --remove-orphans -v'
+            sh 'docker image prune -a -f'
+            sh 'docker image list -a'
+        }
         success {
             echo 'Build was successful!'
         }
