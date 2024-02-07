@@ -3,7 +3,7 @@ pipeline {
         label "localhost-agent" // any
     }
     environment {
-        APP_NAME = "Medhead App"
+        APP_NAME = "Medhead_App"
         RELEASE = "1.0.0"
         DOCKER_USER = "samirguemri"
         DOCKER_PASS = "dockerhub-token"
@@ -81,9 +81,7 @@ pipeline {
         stage("================ Build & Push Docker images ================") {
             steps {
                 script {
-                    docker.withRegistry('',DOCKER_PASS) {
-                        docker_image = docker.build "${IMAGE_NAME}"
-                    }
+                    docker_image = docker.build("${IMAGE_NAME}")
                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image.push("${IMAGE_TAG}")
                         docker_image.push('latest')
