@@ -15,7 +15,6 @@ pipeline {
         stage('================ Cleanup workspace & Prune Docker data ================') {
             steps {
                 script {
-                    cleanWs()
                     sh 'docker system prune -a --volumes -f'
                 }
             }
