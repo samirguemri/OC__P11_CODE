@@ -3,7 +3,7 @@ pipeline {
         label "localhost-agent" // any
     }
     environment {
-        APP_NAME = "Medhead_App"
+        APP_NAME = "medhead-app"
         RELEASE = "1.0.0"
         DOCKER_USER = "samirguemri"
         DOCKER_PASS = "dockerhub-token"
