@@ -80,22 +80,25 @@ pipeline {
 
         stage("================ Build & Push Docker images ================") {
             steps {
-                // script {
-                //     docker.withRegistry('',DOCKER_PASS) {
-                //         docker_image.push("${IMAGE_TAG}")
-                //         docker_image.push('latest')
-                //     }
-                // }
-                dockerfile {
-                    filename 'Dockerfile'
-                    dir 'back/speciality-service'
-                    label 'medhead'
-                    label 'speciality-service'
-                    additionalBuildArgs  "--build-arg version=${RELEASE}"
-                    // args "-v /tmp:/tmp"
-                    registryUrl 'https://hub.docker.com/samirguemri/'
-                    registryCredentialsId 'dockerhub-token'
+                script {
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
                 }
+                // dockerfile {
+                //     filename 'Dockerfile'
+                //     dir 'back/speciality-service'
+                //     label 'medhead'
+                //     label 'speciality-service'
+                //     additionalBuildArgs  "--build-arg version=${RELEASE}"
+                //     // args "-v /tmp:/tmp"
+                //     registryUrl 'https://hub.docker.com/samirguemri/'
+                //     registryCredentialsId 'dockerhub-token'
+                // }
             }
         }
 
