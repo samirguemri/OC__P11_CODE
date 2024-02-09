@@ -8,40 +8,39 @@ Le projet consiste à développer une application en suivant le modèle d'archit
 
 L'application est composée de 5 services qui communiqueront entre eux :
 
-- ### 4 services backend (Spring Boot REST API) :
+### 4 services backend (Spring Boot REST API) :
 
-  - #### speciality-service
+- #### speciality-service
 
-    Application Java Web `Spring Boot` qui expose une API REST pour gérer les spécialités.
+  Application Java Web `Spring Boot` qui expose une API REST pour gérer les spécialités.
 
-  - #### hospital-service
+- #### hospital-service
 
-    Application Java Web `Spring Boot` qui expose une API REST pour gérer les hôpitaux
+  Application Java Web `Spring Boot` qui expose une API REST pour gérer les hôpitaux
 
-  - #### destination-service
+- #### destination-service
 
-    Application Java Web `Spring Boot` qui expose une API REST pour trouver l'hôpital le plus proche en fonction d'une localisation et une spécialité.
+  Application Java Web `Spring Boot` qui expose une API REST pour trouver l'hôpital le plus proche en fonction d'une localisation et une spécialité.
 
-  - #### notification-service
+- #### notification-service
 
-    Application Java Web `Spring Boot` qui expose une API REST pour envoyer une notification de réservation à l'hôpital choisit.
+  Application Java Web `Spring Boot` qui expose une API REST pour envoyer une notification de réservation à l'hôpital choisit.
 
-- ### 1 service frontend (React)
+### 1 service frontend (React)
 
-  - #### medhead-ui
+- #### medhead-ui
 
-    Application front `React` où les utilisateurs peuvent gérer les films. Toute communication avec `destination-service` se fait en `HTTPS`
+  Application front `React` où les utilisateurs peuvent gérer les films. Toute communication avec `destination-service` se fait en `HTTPS`
 
-## Prérequis
+## Lancement des applications en localhost
+
+### Prérequis
 
 - [`Docker`](https://docs.docker.com/get-docker/)
 - [`Docker Compose`](https://docs.docker.com/compose/install/)
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [`Jenkins`](https://www.jenkins.io/doc/book/installing/)
-
-## Lancement des applications
 
 1. Cloner le projet en local
 
@@ -100,25 +99,106 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
   ![readme-ui-2](ressource/images/readme-ui-2.png)
 
+## Déploiement des applications
+
+### Prérequis
+
+- [`Jenkins`](https://www.jenkins.io/doc/book/installing/)
+- [`Minikube`](https://minikube.sigs.k8s.io/docs/start/)
+- [`ArgoCD`](https://argo-cd.readthedocs.io/en/stable/getting_started/)
+
+1. CI Pipeline
+
 - **Jenkins**
 
   - You can start the Jenkins service with the command:
 
-    ```
-    sudo systemctl start jenkins
-    ```
+  ```
+  sudo systemctl start jenkins
+  ```
 
-    The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
+  The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
+
+2. CD Pipeline
 
 - **Kubernetes**
 
-  - minikube
+  - installing kubernetes
+
+  - start k8s cluster locally
 
   '''
   minikube start --driver=docker
+  minikube status
+  '''
+
+  - get minikube node's ip address
+
+  '''
+  minikube ip
+  '''
+
+- get node information (nop <> pod)
+
+  '''
+  kubectl get nod -o wide
+  '''
+
+  - create k8s components before configuring argoCD application:
+
+  - create the `medhead` namespace
+
+  '''
+  kubectl apply -f medhead-namespace.yaml
+  '''
+
+  - deploying mongodb application (and mongo-express for demo purposes)
+
+  '''
+  kubectl apply -n medhead -f setup/mongo/secret.yaml
+  kubectl apply -n medhead -f setup/mongo/service.yaml
+  kubectl apply -n medhead -f setup/mongo/configmap.yaml
+  kubectl apply -n medhead -f setup/mongo/statefulset.yaml
+  kubectl apply -n medhead -f setup/mongo/volume.yaml
+  '''
+
+  - deploying zookeeper application
+
+  '''
+  kubectl apply -n medhead -f setup/kafka/configmap.yaml
+  kubectl apply -n medhead -f setup/kafka/secret.yaml
+  kubectl apply -n medhead -f setup/kafka/service.yaml
+  kubectl apply -n medhead -f setup/kafka/statefulset.yaml
+  kubectl apply -n medhead -f setup/kafka/volume.yaml
+  '''
+
+  - deploying kafka application
+
+  '''
+  kubectl apply -n medhead -f setup/kafka/configmap.yaml
+  kubectl apply -n medhead -f setup/kafka/secret.yaml
+  kubectl apply -n medhead -f setup/kafka/service.yaml
+  kubectl apply -n medhead -f setup/kafka/statefulset.yaml
+  kubectl apply -n medhead -f setup/kafka/volume.yaml
+  '''
+
+  - configuring argoCD's service applications to automatically deploy and sync service applications :
+
+  '''
+  kubectl apply -n medhead -f applications/speciality-application.yaml
+  kubectl apply -n medhead -f applications/hospital-application.yaml
+  kubectl apply -n medhead -f applications/destination-application.yaml
+  kubectl apply -n medhead -f applications/notification-application.yaml
+  kubectl apply -n medhead -f applications/medhead-ui-application.yaml
   '''
 
 - **ArgoCD**
+
+- test
+
+  '''
+  kubectl port-forward svc/argocd-server -n argocd 7080:443
+  '''
 
 ## Arrêt des applications
 
