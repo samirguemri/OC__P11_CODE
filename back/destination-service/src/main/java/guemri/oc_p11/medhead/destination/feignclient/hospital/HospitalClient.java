@@ -9,7 +9,7 @@ import java.util.List;
 
 @FeignClient(
         name = "hospital-client",
-        url = "http://localhost:8000",
+        url = "http://hospital:8000",
         path = "api/v1/hospitals"
 )
 public interface HospitalClient {

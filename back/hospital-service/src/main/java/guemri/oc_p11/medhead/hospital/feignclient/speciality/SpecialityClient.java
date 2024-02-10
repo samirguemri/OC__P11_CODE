@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(
-        name = "speciality-service",
-        url = "http://localhost:9000",
+        name = "speciality-client",
+        url = "http://speciality:9000",
         path = "api/v1/specialities",
         configuration = ClientConfiguration.class
 )

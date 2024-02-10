@@ -7,7 +7,7 @@ spring:
       username: rootuser
       password: rootpass
       port: 27017
-      host: localhost
+      host: mongodb
       database: medhead
 
 server:
@@ -21,4 +21,4 @@ server:
 
 app:
   cors:
-    allowed-origins: https://localhost:3443,http://localhost:3000
+    allowed-origins: https://medhead-ui:3443,http://medhead-ui:3000
