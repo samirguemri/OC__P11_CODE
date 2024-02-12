@@ -194,10 +194,20 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 - **ArgoCD**
 
+- intall argoCD
+
+  -Fetch Password
+
+  '''
+  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+  '''
+
 - test
 
   '''
   kubectl port-forward svc/argocd-server -n argocd 7080:443
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
   '''
 
 ## Arrêt des applications
