@@ -5,6 +5,7 @@ import guemri.oc_p11.medhead.speciality.dao.SpecialityResponse;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityGroupResponse;
 import guemri.oc_p11.medhead.speciality.service.SpecialityService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("api/v1/specialities")
 public record SpecialityController(SpecialityService specialityService) {
+
+    /*@Autowired
+    SpecialityService specialityService;*/
 
     @PostMapping("/post")
     public ResponseEntity<SpecialityResponse> insertSpeciality(@RequestBody SpecialityRequest request){
