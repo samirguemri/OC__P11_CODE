@@ -18,9 +18,6 @@ import java.util.NoSuchElementException;
 @RequestMapping("api/v1/specialities")
 public record SpecialityController(SpecialityService specialityService) {
 
-    /*@Autowired
-    SpecialityService specialityService;*/
-
     @PostMapping("/post")
     public ResponseEntity<SpecialityResponse> insertSpeciality(@RequestBody SpecialityRequest request){
         SpecialityResponse response = specialityService.insertSpeciality(request);

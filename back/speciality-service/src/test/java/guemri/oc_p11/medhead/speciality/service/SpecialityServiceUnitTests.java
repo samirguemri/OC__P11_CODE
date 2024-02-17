@@ -159,7 +159,6 @@ public class SpecialityServiceUnitTests {
                 .build();
         Mockito.when(specialityRepository.findSpecialityBySpecialityName("Parodontie")).thenReturn(Optional.of(speciality2));
 
-
         // Execute tests
         List<String> names = Arrays.asList("Anesthésie", "Parodontie");
         List<SpecialityResponse> responses = specialityService.getSpecialitiesFromList(names);

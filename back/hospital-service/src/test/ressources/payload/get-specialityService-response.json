@@ -1,0 +1,12 @@
+[
+  {
+    "code":"123",
+    "specialityName":"Anesthesie",
+    "specialityGroup":"Anesthesie"
+  },
+  {
+    "code":"456",
+    "specialityName":"Cardiologie",
+    "specialityGroup":"Cardiologie"
+  }
+]

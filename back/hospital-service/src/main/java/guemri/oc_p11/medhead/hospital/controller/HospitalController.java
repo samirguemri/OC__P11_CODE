@@ -23,7 +23,7 @@ public record HospitalController(HospitalService hospitalService) {
         return ResponseEntity.status(HttpStatus.OK).body(hospitalService.getHospitalById(id));
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<HospitalResponse> getHospitalByName(@PathVariable String name) {
         return ResponseEntity.status(HttpStatus.OK).body(hospitalService.getHospitalByName(name));
     }
