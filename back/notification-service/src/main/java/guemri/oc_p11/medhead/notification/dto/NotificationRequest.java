@@ -6,12 +6,12 @@ import lombok.Builder;
 public record NotificationRequest(
         String hospitalRef,
         String specialityCode,
-        Integer number
+        Integer bedToReserve
 ) {
     @Override
     public String toString() {
         return "Notification [ hospitalRef = " + hospitalRef + ", " +
                 "specialityCode = " + specialityCode + "," +
-                " number of bed = " + number + " ]";
+                " number of bed = " + bedToReserve + " ]";
     }
 }

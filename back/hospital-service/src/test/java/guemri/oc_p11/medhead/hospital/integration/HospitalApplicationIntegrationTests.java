@@ -11,12 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -62,9 +60,6 @@ class HospitalApplicationIntegrationTests {
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
-
-    @Value("classpath:data/data.json")
-    Resource resourceFile;
 
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {

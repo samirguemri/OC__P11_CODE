@@ -1,0 +1,41 @@
+{
+  "origins": [
+    {
+      "waypoint": {
+        "location": {
+          "latLng": {
+            "latitude": 52.5171114,
+            "longitude": -0.9834831
+          }
+        }
+      },
+      "routeModifiers": {
+        "avoidFerries": true
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "waypoint": {
+        "location": {
+          "latLng": {
+            "latitude": 52.6304472,
+            "longitude": -1.0834831
+          }
+        }
+      }
+    },
+    {
+      "waypoint": {
+        "location": {
+          "latLng": {
+            "latitude": 51.5171114,
+            "longitude": -0.1462771
+          }
+        }
+      }
+    }
+  ],
+  "travelMode": "DRIVE",
+  "routingPreference": "TRAFFIC_AWARE"
+}

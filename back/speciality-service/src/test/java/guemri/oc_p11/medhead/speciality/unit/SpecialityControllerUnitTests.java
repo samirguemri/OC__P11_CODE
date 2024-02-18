@@ -1,5 +1,6 @@
-package guemri.oc_p11.medhead.speciality.controller;
+package guemri.oc_p11.medhead.speciality.unit;
 
+import guemri.oc_p11.medhead.speciality.controller.SpecialityController;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityGroupResponse;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityRequest;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityResponse;

@@ -1,10 +1,11 @@
-package guemri.oc_p11.medhead.speciality.service;
+package guemri.oc_p11.medhead.speciality.unit;
 
 import guemri.oc_p11.medhead.speciality.dao.SpecialityGroupResponse;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityRequest;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityResponse;
 import guemri.oc_p11.medhead.speciality.entity.Speciality;
 import guemri.oc_p11.medhead.speciality.repository.SpecialityRepository;
+import guemri.oc_p11.medhead.speciality.service.SpecialityService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

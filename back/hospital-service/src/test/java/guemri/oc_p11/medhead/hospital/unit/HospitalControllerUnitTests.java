@@ -1,4 +1,4 @@
-package guemri.oc_p11.medhead.hospital.unit.controller;
+package guemri.oc_p11.medhead.hospital.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guemri.oc_p11.medhead.hospital.controller.HospitalController;

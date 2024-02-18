@@ -1,4 +1,4 @@
-package guemri.oc_p11.medhead.speciality;
+package guemri.oc_p11.medhead.speciality.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guemri.oc_p11.medhead.speciality.dao.SpecialityRequest;

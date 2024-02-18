@@ -1,0 +1,52 @@
+[
+  {
+    "hospitalRef": "123",
+    "hospitalName": "Leicester General Hospital",
+    "hospitalAddress": {
+      "numberAndStreet": "Gwendolen Rd",
+      "locality": "Leicester",
+      "postCode": "LE5 4PW",
+      "country": "United Kingdom"
+    },
+    "latitude": 52.6304472,
+    "longitude": -1.0834831,
+    "availableBeds": 8,
+    "specialities": [
+      {
+        "code": "spe-964",
+        "specialityName": "Cardiologie",
+        "specialityGroup": "Cardiologie"
+      },
+      {
+        "code": "spe-132",
+        "specialityName": "Anesthesie",
+        "specialityGroup": "Anesthesie"
+      }
+    ]
+  },
+  {
+    "hospitalRef": "456",
+    "hospitalName": "Phoenix Hospital Group",
+    "hospitalAddress": {
+      "numberAndStreet": "9 Harley Street",
+      "locality": "London",
+      "postCode": "W1G 9QY",
+      "country": "United Kingdom"
+    },
+    "latitude": 51.5171114,
+    "longitude": -0.1462771,
+    "availableBeds": 10,
+    "specialities": [
+      {
+        "code": "spe-785",
+        "specialityName": "Radiologie clinique",
+        "specialityGroup": "Groupe de radiologie"
+      },
+      {
+        "code": "spe-132",
+        "specialityName": "Anesthésie",
+        "specialityGroup": "Anesthésie"
+      }
+    ]
+  }
+]

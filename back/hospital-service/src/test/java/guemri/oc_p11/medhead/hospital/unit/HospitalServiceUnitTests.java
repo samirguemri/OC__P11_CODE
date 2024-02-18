@@ -1,4 +1,4 @@
-package guemri.oc_p11.medhead.hospital.unit.service;
+package guemri.oc_p11.medhead.hospital.unit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

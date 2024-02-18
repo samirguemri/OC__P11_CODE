@@ -90,7 +90,7 @@ public record DestinationService(
     private NotificationRequest buildNotificationRequest(String hospitalRef, String speciality) {
         return NotificationRequest.builder()
                 .hospitalRef(hospitalRef)
-                .specialityCode(speciality)
+                .speciality(speciality)
                 .number(1)
                 .build();
     }
