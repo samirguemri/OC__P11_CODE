@@ -1,0 +1,16 @@
+{
+  "routeMatrixElements": [
+    {
+      "originIndex": 0,
+      "destinationIndex": 1,
+      "distanceMeters": 5000,
+      "duration": "5 mins"
+    },
+    {
+      "originIndex": 0,
+      "destinationIndex": 2,
+      "distanceMeters": 12000,
+      "duration": "12 mins"
+    }
+  ]
+}

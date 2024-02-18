@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "Gwendolen Rd",
+          "short_name": "Gwendolen Rd",
+          "types": ["route"]
+        },
+        {
+          "long_name": "Leicester",
+          "short_name": "Leicester",
+          "types": ["locality", "political"]
+        },
+        {
+          "long_name": "LE5 4PW",
+          "short_name": "LE5 4PW",
+          "types": ["postal_code"]
+        },
+        {
+          "long_name": "United Kingdom",
+          "short_name": "UK",
+          "types": ["country", "political"]
+        }
+      ],
+      "formatted_address": "Leicester General Hospital, Gwendolen Rd, Leicester, LE5 4PW, United Kingdom",
+      "geometry": {
+        "location": {
+          "lat": 52.6304472,
+          "lng": -1.0834831
+        }
+      },
+      "place_id": "65bb7f4b1a06ac14e9cc8f5b",
+      "types": ["hospital"]
+    }
+  ],
+  "status": "OK"
+}

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
+import static org.springframework.kafka.listener.ConsumerAwareRebalanceListener.LOGGER;
+
 @Service
 @Slf4j
 public record NotificationService(
@@ -16,9 +18,9 @@ public record NotificationService(
 
     public static final String TOPIC = "hospitalReservation";
 
-    public boolean sendNotification(NotificationRequest notification) throws InterruptedException {
+    public void sendNotification(NotificationRequest notification) throws InterruptedException {
 
-        log.info(String.format("Notification sent -> %s", notification));
+        /*log.info(String.format("Notification sent -> %s", notification));
         CompletableFuture<SendResult<String, Object>> completableFuture = kafkaTemplate.send(TOPIC, notification);
 
         // Asynchronously handle the result
@@ -31,6 +33,32 @@ public record NotificationService(
             return null;
         });
         return true;
+
+        try {
+            kafkaTemplate.send(TOPIC, notification).get(); // Waits for the send operation to complete
+            return true; // Return true if send succeeds
+        } catch (Exception e) {
+            log.error("Failed to send message with exception: " + e.getMessage());
+            return false; // Return false if send fails
+        }
+
+        try {
+            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TOPIC, notification);
+            future.whenComplete((result, ex) -> {
+                if (ex == null) {
+                    System.out.println("Sent notification=[" + notification +
+                            "] with offset=[" + result.getRecordMetadata().offset() + "]");
+                } else {
+                    System.out.println("Unable to send notification=[" +
+                            notification + "] due to : " + ex.getMessage());
+                }
+            });
+
+        } catch (Exception ex) {
+            System.out.println("ERROR : "+ ex.getMessage());
+        }*/
+        log.info("sending payload='%s' to topic='%s'", notification, TOPIC);
+        kafkaTemplate.send(TOPIC, notification);
     }
 
 }

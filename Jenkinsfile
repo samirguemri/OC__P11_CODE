@@ -2,6 +2,7 @@ pipeline {
     agent {
         label "localhost-agent" // any
     }
+
     environment {
         APP_NAME = "medhead-app"
         RELEASE = "1.0.0"
@@ -9,6 +10,7 @@ pipeline {
         DOCKER_PASS = "dockerhub-token"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
+
     stages {
 
         stage('================ Cleanup workspace & Prune Docker data ================') {
@@ -115,13 +117,6 @@ pipeline {
             }
         }
 
-        stage('================ Deploy artifacts ================') {
-            steps {
-                //sh 'curl http://localhost:3000/param?query=demo | jq'
-                sh 'echo Deploy artifacts'
-            }
-        }
-
         stage('================ Trigger CD Pipeline ================') {
             steps {
                 script {
@@ -131,6 +126,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             //sh 'docker compose down --remove-orphans -v'

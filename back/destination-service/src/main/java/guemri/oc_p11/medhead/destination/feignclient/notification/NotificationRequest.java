@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record NotificationRequest(
         String hospitalRef,
-        String specialityCode,
+        String speciality,
         Integer number
 ) {
 }

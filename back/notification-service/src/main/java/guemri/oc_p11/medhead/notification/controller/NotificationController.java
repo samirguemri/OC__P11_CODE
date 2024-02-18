@@ -14,11 +14,7 @@ public record NotificationController(
 
     @PostMapping("/send")
     public ResponseEntity<String> sendNotification(@RequestBody NotificationRequest notification) throws InterruptedException {
-        Boolean sent = notificationService.sendNotification(notification);
-        if (sent) {
-            return ResponseEntity.status(HttpStatus.OK).body("Notification sent with success");
-        } else {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Can't sent notification");
-        }
+        notificationService.sendNotification(notification);
+        return ResponseEntity.status(HttpStatus.OK).body("Notification sent");
     }
 }

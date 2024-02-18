@@ -32,6 +32,7 @@ public record GeocodingAddressResponse(
             Location northeast,
             Location southwest
     ) {}
+    @Builder
     public record Location(
             double lat,
             double lng
