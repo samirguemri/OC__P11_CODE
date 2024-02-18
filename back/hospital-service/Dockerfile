@@ -1,4 +1,12 @@
-FROM openjdk:17-oracle
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS builder
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn package -DskipTests
+
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
 VOLUME /tmp
-COPY target/*.jar  service.jar
-ENTRYPOINT ["java","-jar", "service.jar"]
+EXPOSE 8080
+COPY --from=builder /app/target/*.jar app.jar
+ENTRYPOINT ["java","-jar", "app.jar"]

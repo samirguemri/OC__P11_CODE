@@ -30,7 +30,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 - #### medhead-ui
 
-  Application front `React` où les utilisateurs peuvent gérer les films. Toute communication avec `destination-service` se fait en `HTTPS`
+  Application front `React` où les utilisateurs peuvent calculer l'Hôptial le plus proche en fonction de leur position et d'une sélection de spécialité. Toute communication avec `destination-service` se fait en `HTTPS`
 
 ## Lancement des applications en localhost
 
@@ -53,7 +53,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 - **docker compose**
 
-  - Ouvrir un `terminal` et, depuis le dossier root qui contien le fichier docker-compose.yaml, executer la commande
+  - Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
 
     ```
     docker compose up -d --build
