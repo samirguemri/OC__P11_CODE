@@ -7,7 +7,7 @@ spring:
       username: rootuser
       password: rootpass
       port: 27017
-      host: localhost
+      host: mongodb
       database: medhead
 
 server:
