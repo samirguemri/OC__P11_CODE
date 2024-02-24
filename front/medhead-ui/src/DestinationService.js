@@ -9,7 +9,7 @@ const instance = axios.create({
 });
 
 function searchDestination(requestBody) {
-  return instance.post("/search", JSON.stringify(requestBody), {
+  return instance.post("/search", requestBody, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "content-type": "application/json",

@@ -87,7 +87,7 @@ function DestinationForm({ isLoggedIn }) {
     };
 
     destinationService
-      .searchDestination(requestBody)
+      .searchDestination(JSON.stringify(requestBody))
       .then((response) => {
         //console.log(response.data);
         setDestinationResponse(response.data);
