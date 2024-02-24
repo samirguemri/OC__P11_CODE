@@ -6,7 +6,7 @@ server:
   port: 8443 #8081 for http connections with redirection
   ssl:
     enabled: true
-    key-store: classpath:localSSL.jks
+    key-store: classpath:medhead.p12
     key-store-password: medhead
     key-store-type: PKCS12
     key-alias: medhead
@@ -18,4 +18,3 @@ app:
 google:
   maps:
     api-key: "AIzaSyCDE4qwwbeKMVOsBPtE4lsNjYrRohyIATQ"
-

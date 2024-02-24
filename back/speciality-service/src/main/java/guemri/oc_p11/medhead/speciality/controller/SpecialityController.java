@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/specialities")
 public record SpecialityController(SpecialityService specialityService) {

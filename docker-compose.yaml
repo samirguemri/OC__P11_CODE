@@ -6,6 +6,8 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
+    networks:
+      - medhead
     environment:
       - MONGO_INITDB_ROOT_USERNAME=rootuser
       - MONGO_INITDB_ROOT_PASSWORD=rootpass
@@ -16,11 +18,13 @@ services:
 
   speciality-service:
     build: ./back/speciality-service
-    container_name: speciality-service
+    container_name: speciality
     ports:
       - "9443:9443"
     expose:
       - 9443
+    networks:
+      - medhead
     depends_on:
       - mongodb
 
@@ -28,11 +32,13 @@ services:
     build:
       context: ./back/hospital-service
       dockerfile: Dockerfile
-    container_name: hospital-service
+    container_name: hospital
     ports:
       - "8000:8000"
     expose:
       - 8000
+    networks:
+      - medhead
     depends_on:
       - speciality-service
 
@@ -40,37 +46,31 @@ services:
     build:
       context: ./back/destination-service
       dockerfile: Dockerfile
-    container_name: destination-service
+    container_name: destination
     ports:
       - "8443:8443"
     expose:
       - 8443
+    networks:
+      - medhead
     depends_on:
       - hospital-service
+      - notification-service
 
   notification-service:
     build:
       context: ./back/notification-service
       dockerfile: Dockerfile
-    container_name: notification-service
+    container_name: notification
     ports:
       - "8090:8090"
     expose:
       - 8090
+    networks:
+      - medhead
     depends_on:
-      - destination-service
-      - kafka
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    hostname: zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ALLOW_ANONYMOUS_LOGIN: "yes"
+      kafka:
+        condition: service_healthy
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -87,9 +87,49 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    networks:
+      - medhead
     depends_on:
       - zookeeper
+    healthcheck:
+      test: nc -z localhost 9092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - medhead
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+
+  medhead-ui:
+    build:
+      context: ./front/medhead-ui
+      dockerfile: Dockerfile
+    container_name: medhead-ui
+    ports:
+      - "3443:3443"
+    expose:
+      - 3443
+    networks:
+      - medhead
+    depends_on:
+      - destination-service
+      - speciality-service
 
 volumes:
   mongodb_volume:
     external: true
+
+networks:
+  medhead:
+    driver: bridge

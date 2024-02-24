@@ -16,7 +16,7 @@ pipeline {
         stage('================ Cleanup workspace & Prune Docker data ================') {
             steps {
                 script {
-                    sh 'docker system prune -a --volumes -f'
+                    sh 'docker system prune -a' // Remove all unused containers, networks, images.  "--volumes -f" for volumes.
                 }
             }
         }

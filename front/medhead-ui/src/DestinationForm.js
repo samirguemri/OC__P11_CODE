@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
-import { specialityService } from './SpecialityService'
-import { destinationService } from './DestinationService'
+import { specialityService } from "./SpecialityService";
+import { destinationService } from "./DestinationService";
 
 function DestinationForm({ isLoggedIn }) {
   const [selectedLocation, setLocation] = useState("");
@@ -25,7 +25,8 @@ function DestinationForm({ isLoggedIn }) {
   useEffect(() => {
     setState("loading");
 
-    specialityService.getAllSpecialities()
+    specialityService
+      .getAllSpecialities()
       .then((specialities) => {
         setState("success");
         setSpecialities(specialities.data);
@@ -53,12 +54,11 @@ function DestinationForm({ isLoggedIn }) {
       })
       .catch((error) => {
         setState("error");
-        console.error("Error:", error);
+        console.error("specialityService Error:", JSON.stringify(error));
       });
-      //console.log("groupedSpecialties => " + JSON.stringify(groupedSpecialties));
+    //console.log("groupedSpecialties => " + JSON.stringify(groupedSpecialties));
 
-      //console.log("Token => ", localStorage.token);
-
+    //console.log("Token => ", localStorage.token);
   }, [isLoggedIn]);
 
   const handleLocationChange = (e) => {
@@ -70,7 +70,6 @@ function DestinationForm({ isLoggedIn }) {
   };
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
 
     const location = locations.find(
@@ -87,14 +86,15 @@ function DestinationForm({ isLoggedIn }) {
       ).specialityName,
     };
 
-    destinationService.searchDestination(JSON.stringify(requestBody))
+    destinationService
+      .searchDestination(requestBody)
       .then((response) => {
         //console.log(response.data);
         setDestinationResponse(response.data);
         setHideResponseCmp(false);
       })
       .catch((error) => {
-        console.log("OUTPUT : destination-service : ", JSON.stringify(error));
+        console.log("destinationService Error : ", JSON.stringify(error));
       });
   };
 

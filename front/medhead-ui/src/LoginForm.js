@@ -4,12 +4,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { userService } from './UserService'
+import { userService } from "./UserService";
 
 function LoginForm({ isLoggedIn, onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("unknown");
+  const [firstName, setFirstName] = useState("user");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +19,8 @@ function LoginForm({ isLoggedIn, onLogin }) {
       password: password,
     };
 
-    userService.loginUser(userCredentials)
+    userService
+      .loginUser(userCredentials)
       .then((response) => {
         localStorage.setItem("token", response.headers.getAuthorization()); // Store the token
         setFirstName(response.data.firstName);
@@ -31,7 +32,7 @@ function LoginForm({ isLoggedIn, onLogin }) {
     onLogin();
   };
 
-  if (firstName !== "unknown") {
+  if (firstName !== "user") {
     return (
       <p className="m-3">
         Welcome <span className="fs-5 fw-bolder fst-italic">{firstName}</span>
