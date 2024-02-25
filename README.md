@@ -85,144 +85,152 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 1. Cloner le projet en local
 
-    ```
-    git clone https://github.com/samirguemri/OC__P11_CODE.git
-    cd OC__P11_CODE
-    ```
+   ```
+   git clone https://github.com/samirguemri/OC__P11_CODE.git
+   cd OC__P11_CODE
+   ```
 
 2. Démarrer MongoDB dans un docker container
 
-    Télécharger l'image mongo et démarrer le docker container
+   Télécharger l'image mongo et démarrer le docker container
 
-    ```
-    docker pull mongo
-    docker run -d -p 27017:27017 --name mongodb mongo
-    ```
+   ```
+   docker pull mongo
+   docker run -d -p 27017:27017 --name mongodb mongo
+   ```
 
-    Importer les spécialités et les hôpitaux dans mongodb
+   Importer les spécialités et les hôpitaux dans mongodb
 
-    ```
-    docker cp resources/medhead.hospital.json mongodb:/hospitals.json
-    docker exec -it mongodb mongoimport --db mongodb --collection hospital --file hospitals.json --jsonArray
-    ```
+   ```
+   docker cp resources/medhead.hospital.json mongodb:/hospitals.json
+   docker exec -it mongodb mongoimport --db mongodb --collection hospital --file hospitals.json --jsonArray
+   ```
 
-    ```
-    docker cp resource/medhead.speciality.json mongodb:/specialities.json
-    docker exec -it mongodb mongoimport --db mongodb --collection speciality --file specialities.json --jsonArray
-    ```
+   ```
+   docker cp resource/medhead.speciality.json mongodb:/specialities.json
+   docker exec -it mongodb mongoimport --db mongodb --collection speciality --file specialities.json --jsonArray
+   ```
 
 3. Builder les applications
 
-    **speciality-service**
+   **speciality-service**
 
-    1. Ouvrir un nouveau terminal dans le dossier root du projet
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-    2. Builder speciality-service
+   2. Builder speciality-service
 
-      ```
-      cd back/speciality-service
-      mvn clean install
-      ```
+   ```
+   cd back/speciality-service
+   mvn clean install
+   ```
 
-    3. Executer `speciality-service`
+   3. Executer `speciality-service`
 
-      ```
-      java -jar target/speciality-service.jar
-      ```
+   ```
+   java -jar target/speciality-service.jar
+   ```
 
-    **hospital-service**
+   **hospital-service**
 
-    1. Ouvrir un nouveau terminal dans le dossier root du projet
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-    2. Builder hospital-service
+   2. Builder hospital-service
 
-      ```
-      cd back/hospital-service
-      mvn clean install
-      ```
+   ```
+   cd back/hospital-service
+   mvn clean install
+   ```
 
-    3. Executer `hospital-service`
+   3. Executer `hospital-service`
 
-      ```
-      java -jar target/hospital-service.jar
-      ```
+   ```
+   java -jar target/hospital-service.jar
+   ```
 
-    **destination-service**
+   **destination-service**
 
-    1. Ouvrir un nouveau terminal dans le dossier root du projet
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-    2. Builder destination-service
+   2. Builder destination-service
 
-      ```
-      cd back/destination-service
-      mvn clean install
-      ```
+   ```
+   cd back/destination-service
+   mvn clean install
+   ```
 
-    3. Executer `destination-service`
+   3. Executer `destination-service`
 
-      ```
-      java -jar target/destination-service.jar
-      ```
+   ```
+   java -jar target/destination-service.jar
+   ```
 
-    **notification-service**
+   **notification-service**
 
-    1. Ouvrir un nouveau terminal dans le dossier root du projet
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-    2. Builder notification-service
+   2. Builder notification-service
 
-      ```
-      cd back/notification-service
-      mvn clean install
-      ```
+   ```
+   cd back/notification-service
+   mvn clean install
+   ```
 
-    3. Executer `notification-service`
+   3. Executer `notification-service`
 
-      ```
-      java -jar target/notification-service.jar
-      ```
+   ```
+   java -jar target/notification-service.jar
+   ```
 
-    Depuis un terminal, executer la commande suivante
+   Depuis un terminal, executer la commande suivante
 
-      ```
-      docker exec -it kafka bash
-      ```
+   ```
+   docker exec -it kafka bash
+   ```
 
-    - ensuite, executer la commande suivante depuis le `bash`
+   - ensuite, executer la commande suivante depuis le `bash`
 
-      ```
-      kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
-      ```
+     ```
+     kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+     ```
 
-    **medhead-ui**
+   **medhead-ui**
 
-    1. Ouvrir un nouveau terminal dans le dossier root du projet
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-    2. Builder medhead-ui
+   2. Builder medhead-ui
 
-      ```
-      cd front/medhead-ui
-      npm install
-      ```
+   ```
+   cd front/medhead-ui
+   npm install
+   ```
 
-    3. Lancer `medhead-ui` dans un navigateur
+   3. Lancer `medhead-ui`
 
-      ```
-      npm start
-      ```
+   ```
+   npm start
+   ```
 
-    - Accéder à l'adresse [`https://localhost:3443`]
+### Tester l'application
 
-    - Pour une première connexion, cette page apparet
+- Accéder à l'adresse [`https://localhost:3443`]
 
-    ![readme-ui-1](resources/images/readme-ui-1.png)
+- Pour une première connexion, cette page apparaît
 
-    - Cliquer sur `Paramètres avancés` > `Continuer vers le site localhost (dangereux)`
+  ![medhead-ui-1](resources/images/medhead-ui-1.png)
 
-    vous devez voir ceci
+- Cliquer sur `Paramètres avancés` > `Continuer vers le site localhost (dangereux)`
 
-    ![readme-ui-2](resources/images/readme-ui-2.png)
+  vous devez voir ceci
 
-    - Utiliser `user` et `pass` pour vous connecter
+  ![medhead-ui-2](resources/images/medhead-ui-2.png)
+
+- Utiliser `user` et `pass` pour vous connecter
+
+  ![medhead-ui-3](resources/images/medhead-ui-3.png)
+
+- Choisir une localisation et une destination pour calculer l'hôpital le plus proche
+
+  ![medhead-ui-4](resources/images/medhead-ui-4.png)
 
 ## Déploiement des applications
 
