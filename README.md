@@ -261,7 +261,17 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
   ![medhead-ui-4](resources/images/medhead-ui-4.png)
 
+## Le workflow et la stratégie des branches
+
+Le wokflow choisie est le GitFlow. _Plus de détail dans le repository d'architecture._
+
+![workflow-and-branching-strategy](resources/images/medhead-WorkFlow.drawio.png)
+
 ## Déploiement des applications
+
+Le process complet de la pipeline CI/CD. _Plus de détail dans le repository d'architecture._
+
+![ci-cd-pipeline](resources/images/medhead-Pipeline.drawio.png)
 
 ### Prérequis
 
@@ -273,13 +283,19 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 - **Jenkins**
 
-  - You can start the Jenkins service with the command:
+  - Démarer le daemon jenkins:
 
   ```
   sudo systemctl start jenkins
   ```
 
-  The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
+  Première connexion :
+
+  ```
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+  ```
+
+  will print the password at console.
 
 2. CD Pipeline
 
@@ -374,15 +390,18 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 ## Arrêt des applications
 
-- Pour arrêter les services backend `speciality-service`, `hospital-service`, `destination-service` et `notification-service`, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
+### docker compose
 
-- Pour arrêter les `containers`
-
+- Arrêter les `containers`
   ```
   docker compose down
   ```
 
-## Creation d'une `self-signed certificate`
+### localhost
+
+- Pour arrêter les 5 services, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
+
+## Création d'une `self-signed certificate`
 
 - Pour créer une certification `PKCS12`, executer la commande suivante
 
@@ -391,7 +410,6 @@ L'application est composée de 5 services qui communiqueront entre eux :
   ```
 
 - Entrer un mot de passe. Pour ce projet, nous utilisons `medhead`
-
   ```
   Enter keystore password: medhead
   Re-enter new password: medhead

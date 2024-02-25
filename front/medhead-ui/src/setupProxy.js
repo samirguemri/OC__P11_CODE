@@ -4,8 +4,8 @@ module.exports = function (app) {
   app.use(
     "/api/v1/specialities",
     createProxyMiddleware({
-      // target: "https://speciality-service:9443",
-      target: "https://localhost:9443",
+      target: "https://speciality-service:9443",
+      // target: "https://localhost:9443",
       changeOrigin: true,
       secure: false,
     })
@@ -14,8 +14,8 @@ module.exports = function (app) {
   app.use(
     "/api/v1/destination",
     createProxyMiddleware({
-      // target: "https://destination-service:8443",
-      target: "https://localhost:8443",
+      target: "https://destination-service:8443",
+      // target: "https://localhost:8443",
       changeOrigin: true,
       secure: false,
     })

@@ -6,24 +6,24 @@ spring:
     name: notification-service
   kafka:
     ## Méthode 1 : Docker
-    # producer:
-    #   bootstrap-servers: kafka:9092
-    #   key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    #   value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    # consumer:
-    #   bootstrap-servers: kafka:9092
-    #   group-id: medhead
-    #   auto-offset-reset: earliest
-    #   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    #   value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-    ## Méthode 2 : localhost
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kafka:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kafka:9092
       group-id: medhead
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    ## Méthode 2 : localhost
+    # producer:
+    #   bootstrap-servers: localhost:9092
+    #   key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    #   value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    # consumer:
+    #   bootstrap-servers: localhost:9092
+    #   group-id: medhead
+    #   auto-offset-reset: earliest
+    #   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    #   value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
