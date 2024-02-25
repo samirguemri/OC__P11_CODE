@@ -34,7 +34,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 ## Lancement des applications en localhost
 
-### Méthode 1 : Utiliser des containers
+### Méthode 1 : Utiliser des containers (par défaut)
 
 #### Prérequis
 
@@ -72,7 +72,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
   kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
   ```
 
-### Méthode 2 : Builder et éxecuter en local
+### Méthode 2 : Builder et éxecuter en local (quelques adaptations à faire)
 
 #### Prérequis
 
@@ -80,6 +80,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
 - [`Docker`](https://docs.docker.com/get-docker/)
 - [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [`MongDB`](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu)
 
 #### Etapes
 
@@ -90,28 +91,29 @@ L'application est composée de 5 services qui communiqueront entre eux :
    cd OC__P11_CODE
    ```
 
-2. Démarrer MongoDB dans un docker container
+2. Adapter les applications pour éxecuter en local
 
-   Télécharger l'image mongo et démarrer le docker container
+   - *Commenter les lignes 7 à 12* et *décommenter les lignes 14 à 17* dans le fichier `application.yaml` dans :
+     - spaciality-service > src > main > resources
+     - hospital-service > src > main > resources
+
+3. Démarrer MongoDB
+
+   Démarrer le daemon mongod
 
    ```
-   docker pull mongo
-   docker run -d -p 27017:27017 --name mongodb mongo
+   sudo systemctl start mongod
    ```
 
    Importer les spécialités et les hôpitaux dans mongodb
 
    ```
-   docker cp resources/medhead.hospital.json mongodb:/hospitals.json
-   docker exec -it mongodb mongoimport --db mongodb --collection hospital --file hospitals.json --jsonArray
+   mongoimport --db medhead --collection hospital --file resources/medhead.hospital.json --jsonArray
+
+   mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
    ```
 
-   ```
-   docker cp resource/medhead.speciality.json mongodb:/specialities.json
-   docker exec -it mongodb mongoimport --db mongodb --collection speciality --file specialities.json --jsonArray
-   ```
-
-3. Builder les applications
+4. Builder les applications
 
    **speciality-service**
 
@@ -127,7 +129,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    3. Executer `speciality-service`
 
    ```
-   java -jar target/speciality-service.jar
+   java -jar target/speciality-service-1.0-SNAPSHOT.jar
    ```
 
    **hospital-service**
