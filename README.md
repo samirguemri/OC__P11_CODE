@@ -81,6 +81,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
 - [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`MongDB`](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu)
+- [`kafka`](https://kafka.apache.org/quickstart)
 
 #### Etapes
 
@@ -93,9 +94,24 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 2. Adapter les applications pour éxecuter en local
 
-   - *Commenter les lignes 7 à 12* et *décommenter les lignes 14 à 17* dans le fichier `application.yaml` dans :
-     - spaciality-service > src > main > resources
-     - hospital-service > src > main > resources
+   - Dans le fichier `back > spaciality-service > src > main > resources > application.yaml`
+
+     - _Commenter les lignes 7 à 12_ et
+     - _décommenter les lignes 14 à 17_
+
+   - Dans le fichier `back > hospital-service > src > main > resources > application.yaml`
+
+     - _Commenter les lignes 7 à 12_ et
+     - _décommenter les lignes 14 à 17_
+
+   - Dans le fichier `back > notification-service > src > main > resources > application.yaml`
+
+     - _Commenter les lignes 9 à 18_ et
+     - _décommenter les lignes 20 à 29_
+
+   - Dans le fichier `front > medhead-ui > src > setupProxy.js`
+     - _Commenter les lignes 7 et 17_ et
+     - _décommenter les lignes 8 et 18_
 
 3. Démarrer MongoDB
 
@@ -113,7 +129,30 @@ L'application est composée de 5 services qui communiqueront entre eux :
    mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
    ```
 
-4. Builder les applications
+4. Démarrer kafka
+
+   Depuis le dossier d'installation de kafka :
+
+   - Démarrer le zookeeper et kafka
+
+   ```
+   bin/zookeeper-server-start.sh config/zookeeper.properties
+   bin/kafka-server-start.sh config/server.properties
+   ```
+
+   - Créer le TOPIC `hospitalReservation`
+
+   ```
+   bin/kafka-topics.sh --create --topic hospitalReservation --bootstrap-server localhost:9092
+   ```
+
+   - Se connecter au `kafka-console-consumer` pour visualiser les notification
+
+   ```
+   bin/kafka-console-consumer.sh --topic hospitalReservation --bootstrap-server localhost:9092
+   ```
+
+5. Builder les applications
 
    **speciality-service**
 
@@ -129,7 +168,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    3. Executer `speciality-service`
 
    ```
-   java -jar target/speciality-service-1.0-SNAPSHOT.jar
+   java -jar target/speciality-service-1.0.0-SNAPSHOT.jar
    ```
 
    **hospital-service**
@@ -146,7 +185,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    3. Executer `hospital-service`
 
    ```
-   java -jar target/hospital-service.jar
+   java -jar target/hospital-service-1.0.0-SNAPSHOT.jar
    ```
 
    **destination-service**
@@ -163,7 +202,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    3. Executer `destination-service`
 
    ```
-   java -jar target/destination-service.jar
+   java -jar target/destination-service-1.0.0-SNAPSHOT.jar
    ```
 
    **notification-service**
@@ -180,20 +219,8 @@ L'application est composée de 5 services qui communiqueront entre eux :
    3. Executer `notification-service`
 
    ```
-   java -jar target/notification-service.jar
+   java -jar target/notification-service-1.0.0-SNAPSHOT.jar
    ```
-
-   Depuis un terminal, executer la commande suivante
-
-   ```
-   docker exec -it kafka bash
-   ```
-
-   - ensuite, executer la commande suivante depuis le `bash`
-
-     ```
-     kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
-     ```
 
    **medhead-ui**
 

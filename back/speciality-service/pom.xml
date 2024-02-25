@@ -5,9 +5,9 @@
 
     <groupId>guemri.oc_p11.medhead.speciality</groupId>
     <artifactId>speciality-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
-	<name>speciality-service</name>
-	<description>speciality-service</description>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>speciality-service</name>
+    <description>speciality-service</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -4,17 +4,17 @@ spring:
   data:
     mongodb:
       ## méthode 1 : docker
-      # authentication-database: admin
-      # username: rootuser
-      # password: rootpass
-      # port: 27017
-      # host: mongodb
-      # database: medhead
-      ## méthode 2 : localhost
       authentication-database: admin
+      username: rootuser
+      password: rootpass
       port: 27017
-      host: localhost
+      host: mongodb
       database: medhead
+      ## méthode 2 : localhost
+      # authentication-database: admin
+      # port: 27017
+      # host: localhost
+      # database: medhead
 
 server:
   port: 8000
