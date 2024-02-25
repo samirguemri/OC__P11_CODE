@@ -4,7 +4,7 @@ Le but de ce projet est de créer un POC (preuve de concept) afin de faire adhé
 
 Le projet consiste à développer une application en suivant le modèle d'architecture en microservices.
 
-## Applications
+## L'application et ses 5 services
 
 L'application est composée de 5 services qui communiqueront entre eux :
 
@@ -34,13 +34,12 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 ## Lancement des applications en localhost
 
-### Prérequis
+### Méthode 1 : Utiliser des containers
+
+#### Prérequis
 
 - [`Docker`](https://docs.docker.com/get-docker/)
 - [`Docker Compose`](https://docs.docker.com/compose/install/)
-- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
-- [`Maven`](https://maven.apache.org/install.html)
-- [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 1. Cloner le projet en local
 
@@ -49,15 +48,15 @@ L'application est composée de 5 services qui communiqueront entre eux :
     cd OC__P11_CODE
    ```
 
-2. Installer les dépendances et Créer les packages
+2. Créer et éxecuter des containers
 
 - **docker compose**
 
   - Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
 
-    ```
-    docker compose up -d --build
-    ```
+  ```
+  docker compose up -d --build
+  ```
 
 - **notification-service**
 
@@ -73,31 +72,157 @@ L'application est composée de 5 services qui communiqueront entre eux :
   kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
   ```
 
-- **medhead-ui**
+### Méthode 2 : Builder et éxecuter en local
 
-  - Ouvrir un `terminal` et, depuis le dossier `front/medhead-ui/`, executer la commande
+#### Prérequis
+
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
+- [`Docker`](https://docs.docker.com/get-docker/)
+- [`Maven`](https://maven.apache.org/install.html)
+- [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+#### Etapes
+
+1. Cloner le projet en local
 
     ```
-    npm install
+    git clone https://github.com/samirguemri/OC__P11_CODE.git
+    cd OC__P11_CODE
     ```
 
-  - Pour lancer l'application `medhead-ui`
+2. Démarrer MongoDB dans un docker container
+
+    Télécharger l'image mongo et démarrer le docker container
 
     ```
-    npm start
+    docker pull mongo
+    docker run -d -p 27017:27017 --name mongodb mongo
     ```
 
-  - Accéder à l'adresse [`https://localhost:3443`]
+    Importer les spécialités et les hôpitaux dans mongodb
 
-  - Pour une première connexion, cette page apparet
+    ```
+    docker cp resources/medhead.hospital.json mongodb:/hospitals.json
+    docker exec -it mongodb mongoimport --db mongodb --collection hospital --file hospitals.json --jsonArray
+    ```
 
-  ![readme-ui-1](ressource/images/readme-ui-1.png)
+    ```
+    docker cp resource/medhead.speciality.json mongodb:/specialities.json
+    docker exec -it mongodb mongoimport --db mongodb --collection speciality --file specialities.json --jsonArray
+    ```
 
-  - Cliquer sur `Paramètres avancés` > `Continuer vers le site localhost (dangereux)`
+3. Builder les applications
 
-  vous devez voir ceci
+    **speciality-service**
 
-  ![readme-ui-2](ressource/images/readme-ui-2.png)
+    1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+    2. Builder speciality-service
+
+      ```
+      cd back/speciality-service
+      mvn clean install
+      ```
+
+    3. Executer `speciality-service`
+
+      ```
+      java -jar target/speciality-service.jar
+      ```
+
+    **hospital-service**
+
+    1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+    2. Builder hospital-service
+
+      ```
+      cd back/hospital-service
+      mvn clean install
+      ```
+
+    3. Executer `hospital-service`
+
+      ```
+      java -jar target/hospital-service.jar
+      ```
+
+    **destination-service**
+
+    1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+    2. Builder destination-service
+
+      ```
+      cd back/destination-service
+      mvn clean install
+      ```
+
+    3. Executer `destination-service`
+
+      ```
+      java -jar target/destination-service.jar
+      ```
+
+    **notification-service**
+
+    1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+    2. Builder notification-service
+
+      ```
+      cd back/notification-service
+      mvn clean install
+      ```
+
+    3. Executer `notification-service`
+
+      ```
+      java -jar target/notification-service.jar
+      ```
+
+    Depuis un terminal, executer la commande suivante
+
+      ```
+      docker exec -it kafka bash
+      ```
+
+    - ensuite, executer la commande suivante depuis le `bash`
+
+      ```
+      kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+      ```
+
+    **medhead-ui**
+
+    1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+    2. Builder medhead-ui
+
+      ```
+      cd front/medhead-ui
+      npm install
+      ```
+
+    3. Lancer `medhead-ui` dans un navigateur
+
+      ```
+      npm start
+      ```
+
+    - Accéder à l'adresse [`https://localhost:3443`]
+
+    - Pour une première connexion, cette page apparet
+
+    ![readme-ui-1](resources/images/readme-ui-1.png)
+
+    - Cliquer sur `Paramètres avancés` > `Continuer vers le site localhost (dangereux)`
+
+    vous devez voir ceci
+
+    ![readme-ui-2](resources/images/readme-ui-2.png)
+
+    - Utiliser `user` et `pass` pour vous connecter
 
 ## Déploiement des applications
 
