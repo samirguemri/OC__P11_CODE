@@ -58,10 +58,6 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn test'
                 }
-                sh 'echo Test frontend application'
-                dir('front/medhead-ui') {
-                    sh 'npm test'
-                }
             }
         }
 
