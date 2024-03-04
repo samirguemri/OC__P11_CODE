@@ -44,33 +44,48 @@ L'application est composée de 5 services qui communiqueront entre eux :
 1. Cloner le projet en local
 
    ```
-    git clone https://github.com/samirguemri/OC__P11_CODE.git
-    cd OC__P11_CODE
+    $ git clone https://github.com/samirguemri/OC__P11_CODE.git
+    $ cd OC__P11_CODE
    ```
 
 2. Créer et éxecuter des containers
 
-- **docker compose**
+   Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
 
-  - Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
+   ```
+   $ docker compose up -d --build
+   ```
 
-  ```
-  docker compose up -d --build
-  ```
+   **mongodb**
 
-- **notification-service**
+   - Depuis un terminal, executer les commandes suivantes
 
-  Depuis un terminal, executer la commande suivante
+   ```
+   $ docker cp resources/medhead.hospital.json mongodb:medhead.hospital.json
+   $ docker cp resources/medhead.speciality.json mongodb:medhead.speciality.json
+   $ docker exec -it mongodb sh
+   ```
 
-  ```
-  docker exec -it kafka bash
-  ```
+   - Importer les spécialités et les hôpitaux dans mongodb
 
-  ensuite, executer la commande suivante depuis le `bash`
+   ```
+   $ mongoimport --db medhead --collection hospital --authenticationDatabase admin --username rootuser --password rootpass --file medhead.hospital.json --jsonArray
+   $ mongoimport --db medhead --collection speciality --authenticationDatabase admin --username rootuser --password rootpass --file medhead.speciality.json --jsonArray
+   ```
 
-  ```
-  kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
-  ```
+   **notification-service**
+
+   Depuis un terminal, executer la commande suivante
+
+   ```
+   $ docker exec -it kafka bash
+   ```
+
+   ensuite, executer la commande suivante depuis le `bash`
+
+   ```
+   $ kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+   ```
 
 ### Méthode 2 : Builder et éxecuter en local (quelques adaptations à faire)
 
@@ -88,8 +103,8 @@ L'application est composée de 5 services qui communiqueront entre eux :
 1. Cloner le projet en local
 
    ```
-   git clone https://github.com/samirguemri/OC__P11_CODE.git
-   cd OC__P11_CODE
+   $ git clone https://github.com/samirguemri/OC__P11_CODE.git
+   $ cd OC__P11_CODE
    ```
 
 2. Adapter les applications pour éxecuter en local
@@ -118,38 +133,37 @@ L'application est composée de 5 services qui communiqueront entre eux :
    Démarrer le daemon mongod
 
    ```
-   sudo systemctl start mongod
+   $ sudo systemctl start mongod
    ```
 
    Importer les spécialités et les hôpitaux dans mongodb
 
    ```
-   mongoimport --db medhead --collection hospital --file resources/medhead.hospital.json --jsonArray
-
-   mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
+   $ mongoimport --db medhead --collection hospital --file resources/medhead.hospital.json --jsonArray
+   $ mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
    ```
 
 4. Démarrer kafka
 
    Depuis le dossier d'installation de kafka :
 
-   - Démarrer le zookeeper et kafka
+   - Démarrer le `zookeeper` et le `Kafka broker`
 
    ```
-   bin/zookeeper-server-start.sh config/zookeeper.properties
-   bin/kafka-server-start.sh config/server.properties
+   $ bin/zookeeper-server-start.sh config/zookeeper.properties
+   $ bin/kafka-server-start.sh config/server.properties
    ```
 
    - Créer le TOPIC `hospitalReservation`
 
    ```
-   bin/kafka-topics.sh --create --topic hospitalReservation --bootstrap-server localhost:9092
+   $ bin/kafka-topics.sh --create --topic hospitalReservation --bootstrap-server localhost:9092
    ```
 
    - Se connecter au `kafka-console-consumer` pour visualiser les notification
 
    ```
-   bin/kafka-console-consumer.sh --topic hospitalReservation --bootstrap-server localhost:9092
+   $ bin/kafka-console-consumer.sh --topic hospitalReservation --bootstrap-server localhost:9092
    ```
 
 5. Builder les applications
@@ -161,14 +175,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder speciality-service
 
    ```
-   cd back/speciality-service
-   mvn clean install
+   $ cd back/speciality-service
+   $ mvn clean install
    ```
 
    3. Executer `speciality-service`
 
    ```
-   java -jar target/speciality-service-1.0.0-SNAPSHOT.jar
+   $ java -jar target/speciality-service-1.0.0-SNAPSHOT.jar
    ```
 
    **hospital-service**
@@ -178,14 +192,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder hospital-service
 
    ```
-   cd back/hospital-service
-   mvn clean install
+   $ cd back/hospital-service
+   $ mvn clean install
    ```
 
    3. Executer `hospital-service`
 
    ```
-   java -jar target/hospital-service-1.0.0-SNAPSHOT.jar
+   $ java -jar target/hospital-service-1.0.0-SNAPSHOT.jar
    ```
 
    **destination-service**
@@ -195,14 +209,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder destination-service
 
    ```
-   cd back/destination-service
-   mvn clean install
+   $ cd back/destination-service
+   $ mvn clean install
    ```
 
    3. Executer `destination-service`
 
    ```
-   java -jar target/destination-service-1.0.0-SNAPSHOT.jar
+   $ java -jar target/destination-service-1.0.0-SNAPSHOT.jar
    ```
 
    **notification-service**
@@ -212,14 +226,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder notification-service
 
    ```
-   cd back/notification-service
-   mvn clean install
+   $ cd back/notification-service
+   $ mvn clean install
    ```
 
    3. Executer `notification-service`
 
    ```
-   java -jar target/notification-service-1.0.0-SNAPSHOT.jar
+   $ java -jar target/notification-service-1.0.0-SNAPSHOT.jar
    ```
 
    **medhead-ui**
@@ -229,14 +243,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder medhead-ui
 
    ```
-   cd front/medhead-ui
-   npm install
+   $ cd front/medhead-ui
+   $ npm install
    ```
 
    3. Lancer `medhead-ui`
 
    ```
-   npm start
+   $ npm start
    ```
 
 ### Tester l'application
@@ -261,9 +275,26 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
   ![medhead-ui-4](resources/images/medhead-ui-4.png)
 
+## tests de performance & tests de charge
+
+### Prérequis
+
+- [`JMeter`](https://jmeter.apache.org/usermanual/get-started.html)
+
+### Tests
+
+- Pour tester la performance de l'application, nous utilisons JMeter
+
+  - Depuis le dossier d'installation de JMeter
+
+  ```
+  $ cd bin
+  $ sh jmeter.sh
+  ```
+
 ## Le workflow et la stratégie des branches
 
-Le wokflow choisie est le GitFlow. _Plus de détail dans le repository d'architecture._
+Le wokflow choisie est le GitFlow. 
 
 ![workflow-and-branching-strategy](resources/images/medhead-WorkFlow.drawio.png)
 
@@ -273,120 +304,19 @@ Le process complet de la pipeline CI/CD. _Plus de détail dans le repository d'a
 
 ![ci-cd-pipeline](resources/images/medhead-Pipeline.drawio.png)
 
-### Prérequis
+### CI Pipeline
 
-- [`Jenkins`](https://www.jenkins.io/doc/book/installing/)
-- [`Minikube`](https://minikube.sigs.k8s.io/docs/start/)
-- [`ArgoCD`](https://argo-cd.readthedocs.io/en/stable/getting_started/)
+Le fichier **_Jenkinsfile_** contient les définitions de notre pipeline Jenkins et utilisé pour automatiser le processus de build, test, et déploiement de notre application. Voici les étapes clés de notre pipeline :
 
-1. CI Pipeline
+- Build des différents services de l'application
+- Exécution des tests
+- Validation de la qualité du code
+- Build des livrables et enregistrement dans docker hub
+- Déclanchement de la pipeline CD
 
-- **Jenkins**
+### CD Pipeline (hors scope de la PoC)
 
-  - Démarer le daemon jenkins:
-
-  ```
-  sudo systemctl start jenkins
-  ```
-
-  Première connexion :
-
-  ```
-  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-  ```
-
-  will print the password at console.
-
-2. CD Pipeline
-
-- **Kubernetes**
-
-  - installing kubernetes
-
-  - start k8s cluster locally
-
-  '''
-  minikube start --driver=docker
-  minikube status
-  '''
-
-  - get minikube node's ip address
-
-  '''
-  minikube ip
-  '''
-
-- get node information (nop <> pod)
-
-  '''
-  kubectl get nod -o wide
-  '''
-
-  - create k8s components before configuring argoCD application:
-
-  - create the `medhead` namespace
-
-  '''
-  kubectl apply -f medhead-namespace.yaml
-  '''
-
-  - deploying mongodb application (and mongo-express for demo purposes)
-
-  '''
-  kubectl apply -n medhead -f setup/mongo/secret.yaml
-  kubectl apply -n medhead -f setup/mongo/service.yaml
-  kubectl apply -n medhead -f setup/mongo/configmap.yaml
-  kubectl apply -n medhead -f setup/mongo/statefulset.yaml
-  kubectl apply -n medhead -f setup/mongo/volume.yaml
-  '''
-
-  - deploying zookeeper application
-
-  '''
-  kubectl apply -n medhead -f setup/kafka/configmap.yaml
-  kubectl apply -n medhead -f setup/kafka/secret.yaml
-  kubectl apply -n medhead -f setup/kafka/service.yaml
-  kubectl apply -n medhead -f setup/kafka/statefulset.yaml
-  kubectl apply -n medhead -f setup/kafka/volume.yaml
-  '''
-
-  - deploying kafka application
-
-  '''
-  kubectl apply -n medhead -f setup/kafka/configmap.yaml
-  kubectl apply -n medhead -f setup/kafka/secret.yaml
-  kubectl apply -n medhead -f setup/kafka/service.yaml
-  kubectl apply -n medhead -f setup/kafka/statefulset.yaml
-  kubectl apply -n medhead -f setup/kafka/volume.yaml
-  '''
-
-  - configuring argoCD's service applications to automatically deploy and sync service applications :
-
-  '''
-  kubectl apply -n medhead -f applications/speciality-application.yaml
-  kubectl apply -n medhead -f applications/hospital-application.yaml
-  kubectl apply -n medhead -f applications/destination-application.yaml
-  kubectl apply -n medhead -f applications/notification-application.yaml
-  kubectl apply -n medhead -f applications/medhead-ui-application.yaml
-  '''
-
-- **ArgoCD**
-
-- intall argoCD
-
-  -Fetch Password
-
-  '''
-  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-
-  '''
-
-- test
-
-  '''
-  kubectl port-forward svc/argocd-server -n argocd 7080:443
-  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
-  '''
+Après la mise à jour du répertoire GitHub DevOps, la pipeline DC sera déclanchée et débute le processus de déploiment automatique de la nouvelle version de notre application.
 
 ## Arrêt des applications
 
@@ -394,23 +324,23 @@ Le process complet de la pipeline CI/CD. _Plus de détail dans le repository d'a
 
 - Arrêter les `containers`
   ```
-  docker compose down
+  $ docker compose down
   ```
 
 ### localhost
 
-- Pour arrêter les 5 services, aller dans le terminal où ils sont exécutés et appuyer sur `Ctrl+C`
+- Arrêter l'application
 
-## Création d'une `self-signed certificate`
+  Pour arrêter les 5 services, aller dans le terminal où ils sont exécutés et taper `Ctrl+C`
 
-- Pour créer une certification `PKCS12`, executer la commande suivante
+- Arrêter mongodb
 
   ```
-  keytool -genkeypair -alias medhead -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore localSSL.jks -validity 365 -dname "CN=localhost, OU=medhead, O=medhead, L=Nice, ST=AM, C=FR"
+  $ sudo systemctl stop mongod
   ```
 
-- Entrer un mot de passe. Pour ce projet, nous utilisons `medhead`
-  ```
-  Enter keystore password: medhead
-  Re-enter new password: medhead
-  ```
+- Arrêter kafka
+
+  1. Arrêter le **_kafka-console-consumer_** en tapant `Ctrl+C`
+  2. Arrêter **_Kafka broker_** en tapant `Ctrl+C`
+  3. Arrêter **_ZooKeeper_** en tapant `Ctrl+C`

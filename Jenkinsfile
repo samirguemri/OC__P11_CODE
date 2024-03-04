@@ -23,6 +23,7 @@ pipeline {
 
         stage('================ Build and Package services ================') {
             steps {
+                sh '==> echo Build and Package backend services <=='
                 dir('back/speciality-service') {
                     sh 'mvn clean package -DskipTests'
                 }
@@ -35,23 +36,31 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn clean package -DskipTests'
                 }
+                sh '==> echo Build and Package frontend application <=='
+                dir('front/medhead-ui') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('================ Run tests ================') {
             steps {
+                sh '==> echo Test backend services <=='
                 dir('back/speciality-service') {
                     sh 'mvn test'
                 }
-            }
-        }
-
-        stage('================ Integration Tests ================') {
-            steps {
-                script {
-                    // Implement your integration test commands here
-                    // This could involve calling your services' endpoints to check their interaction with MongoDB and Kafka
-                    echo 'Running integration tests...'
+                dir('back/hospital-service') {
+                    sh 'mvn test'
+                }
+                dir('back/destination-service') {
+                    sh 'mvn test'
+                }
+                dir('back/notification-service') {
+                    sh 'mvn test'
+                }
+                sh '==> echo Test frontend application <=='
+                dir('front/medhead-ui') {
+                    sh 'npm test'
                 }
             }
         }
@@ -113,6 +122,14 @@ pipeline {
                             docker_image.push('latest')
                         }
                     }
+
+                    dir('front/medhead-ui') {
+                        docker_image = docker.build("${DOCKER_USER}" + "/medhead-ui")
+                        docker.withRegistry('',DOCKER_PASS) {
+                            docker_image.push("${IMAGE_TAG}")
+                            docker_image.push('latest')
+                        }
+                    }
                 }
             }
         }
@@ -121,7 +138,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo Trigger CD Pipeline'
-                    //sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://jenkins.dev.dman.cloud/job/gitops-complete-pipeline/buildWithParameters?token=gitops-token'"
+                    // TODO : Trigger CD Pipeline (hors scope PoC)
                 }
             }
         }
