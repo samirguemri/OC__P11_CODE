@@ -294,9 +294,24 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 ## Le workflow et la stratégie des branches
 
-Le wokflow choisie est le GitFlow. 
+Le wokflow choisie est le GitFlow.
 
 ![workflow-and-branching-strategy](resources/images/medhead-WorkFlow.drawio.png)
+
+### Les branches
+
+- Une branche **_main_** protégée et iso à l'environnement de produciton. Cette branche ne contient qu'un code testé et validé et conserve l'historique des versions officielles.
+- Une branche **_develop_** protégée et créée depuis la branche **_main_**. Elle sert de branche d'intégration pour les fonctionnalités.
+- Une branche **_feature_** créée pour chaque nouvelle fonctionnalité à partir de la branche **_develop_**.
+- Une branche **_release_** créée à partir de la branche **_develop_** pour chaque fin de sprint.
+- Une branche **_hotfix_** créée à partir de la branche **_main_** pour gérer et résoudre les bugs survenus dans l'environnement de production.
+
+### Comment ça marche!
+
+- Pour chaque nouvelle fonctionnalité, une nouvelle branche **_feature_** est créée à partir de la branche **_develop_**.
+- Lorsque le développement est terminé dans la branche **_feature_**, on fusionne la branche dans **_develop_**.
+- Pour chaque nouvelle release (fin de sprint), on créé une nouvelle branche **_release_** à partir de **_develop_**.
+- On fusionne la branche **_release_** vers la branche **_main_** et vers la brache **_develop_** si des modifications ont étés apportés.
 
 ## Déploiement des applications
 
