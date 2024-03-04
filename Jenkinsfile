@@ -23,7 +23,7 @@ pipeline {
 
         stage('================ Build and Package services ================') {
             steps {
-                sh '==> echo Build and Package backend services <=='
+                sh 'echo ==> Build and Package backend services <=='
                 dir('back/speciality-service') {
                     sh 'mvn clean package -DskipTests'
                 }
@@ -36,7 +36,7 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn clean package -DskipTests'
                 }
-                sh '==> echo Build and Package frontend application <=='
+                sh 'echo ==> Build and Package frontend application <=='
                 dir('front/medhead-ui') {
                     sh 'npm install'
                 }
@@ -45,7 +45,7 @@ pipeline {
 
         stage('================ Run tests ================') {
             steps {
-                sh '==> echo Test backend services <=='
+                sh 'echo ==> Test backend services <=='
                 dir('back/speciality-service') {
                     sh 'mvn test'
                 }
@@ -58,7 +58,7 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn test'
                 }
-                sh '==> echo Test frontend application <=='
+                sh 'echo ==> Test frontend application <=='
                 dir('front/medhead-ui') {
                     sh 'npm test'
                 }
