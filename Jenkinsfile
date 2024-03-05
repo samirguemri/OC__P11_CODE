@@ -61,28 +61,10 @@ pipeline {
             }
         }
 
-        // stage('================ Sonarqube Analysis ================') {
-        //     steps {
-        //         script() {
-        //             withSonarQubeEnv(credentialsId: 'sonarqube-token') {
-        //                 sh 'mvn sonar:sonar'
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('================ Build Docker images ================') {
-        //     steps {
-        //         sh 'docker-compose build'
-        //     }
-        // }
-
-        // stage('================ Start Docker containers ================') {
-        //     steps {
-        //         sh 'docker compose up -d --wait'
-        //         sh 'docker compose ps'
-        //     }
-        // }
+        stage('================ Sonarqube Analysis ================') {
+            sh 'echo Code Quality Analysis'
+            // TODO : Analyse code with Sonarqube (hors scope PoC)
+        }
 
         stage("================ Build & Push Docker images ================") {
             steps {
