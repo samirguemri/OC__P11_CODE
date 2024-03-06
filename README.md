@@ -116,6 +116,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
       ```
       $ mv back/speciality-service/src/main/resources/application.yaml back/speciality-service/src/main/resources/application.yaml.txt
       $ mv back/speciality-service/src/main/resources/application_local.yaml.txt back/speciality-service/src/main/resources/application_local.yaml
+      ```
 
    - **hospital-service**
 
@@ -124,6 +125,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
       ```
       $ mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
       $ mv back/hospital-service/src/main/resources/application_local.yaml.txt back/hospital-service/src/main/resources/application_local.yaml
+      ```
 
    - **notification-service**
 
@@ -132,6 +134,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
       ```
       $ mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
       $ mv back/notification-service/src/main/resources/application_local.yaml.txt back/notification-service/src/main/resources/application_local.yaml
+      ```
 
    - **medhead-ui**
 
@@ -329,7 +332,7 @@ Le wokflow choisie est le GitFlow.
 
 ## Déploiement des applications
 
-Le process complet de la pipeline CI/CD. _Plus de détail dans le repository d'architecture._
+Le process complet de la pipeline CI/CD.
 
 ![ci-cd-pipeline](resources/images/medhead-Pipeline.drawio.png)
 
