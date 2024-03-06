@@ -109,24 +109,40 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
 2. Adapter les applications pour éxecuter en local
 
-   - Dans le fichier `back > spaciality-service > src > main > resources > application.yaml`
+   - **spaciality-service**
 
-     - _Commenter les lignes 7 à 12_ et
-     - _décommenter les lignes 14 à 17_
+      exécuter les commandes
 
-   - Dans le fichier `back > hospital-service > src > main > resources > application.yaml`
+      ```
+      $ mv back/speciality-service/src/main/resources/application.yaml back/speciality-service/src/main/resources/application.yaml.txt
+      $ mv back/speciality-service/src/main/resources/application_local.yaml.txt back/speciality-service/src/main/resources/application_local.yaml
 
-     - _Commenter les lignes 7 à 12_ et
-     - _décommenter les lignes 14 à 17_
+   - **hospital-service**
 
-   - Dans le fichier `back > notification-service > src > main > resources > application.yaml`
+      exécuter les commandes
 
-     - _Commenter les lignes 9 à 18_ et
-     - _décommenter les lignes 20 à 29_
+      ```
+      $ mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
+      $ mv back/hospital-service/src/main/resources/application_local.yaml.txt back/hospital-service/src/main/resources/application_local.yaml
 
-   - Dans le fichier `front > medhead-ui > src > setupProxy.js`
-     - _Commenter les lignes 7 et 17_ et
-     - _décommenter les lignes 8 et 18_
+   - **notification-service**
+
+      exécuter les commandes
+
+      ```
+      $ mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
+      $ mv back/notification-service/src/main/resources/application_local.yaml.txt back/notification-service/src/main/resources/application_local.yaml
+
+   - **medhead-ui**
+
+      exécuter les commandes
+
+      ```
+      $ mv front/medhead-ui/src/setupProxy.js front/medhead-ui/src/setupProxy.js.txt
+      $ mv front/medhead-ui/src/setupProxy_local.js.txt front/medhead-ui/src/setupProxy_local.js
+
+     - renommer le ficher **setupProxy.js** en **setupProxy.js.txt**
+     - renommer le ficher **setupProxy_local.js.txt** en **setupProxy_local.js**
 
 3. Démarrer MongoDB
 
