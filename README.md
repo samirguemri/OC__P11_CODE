@@ -140,9 +140,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
       ```
       $ mv front/medhead-ui/src/setupProxy.js front/medhead-ui/src/setupProxy.js.txt
       $ mv front/medhead-ui/src/setupProxy_local.js.txt front/medhead-ui/src/setupProxy_local.js
-
-     - renommer le ficher **setupProxy.js** en **setupProxy.js.txt**
-     - renommer le ficher **setupProxy_local.js.txt** en **setupProxy_local.js**
+      ```
 
 3. Démarrer MongoDB
 
