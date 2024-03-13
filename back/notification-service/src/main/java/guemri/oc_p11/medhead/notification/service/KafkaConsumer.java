@@ -13,14 +13,14 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class KafkaConsumer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
     private String payload;
 
     @KafkaListener(topics = "hospitalReservation")
     public void receive(ConsumerRecord<?, ?> consumerRecord) {
-        log.info("received payload='%s'", consumerRecord.toString());
+        log.info("received payload => {}", consumerRecord.toString());
         payload = consumerRecord.toString();
         latch.countDown();
     }

@@ -57,7 +57,7 @@ public record NotificationService(
         } catch (Exception ex) {
             System.out.println("ERROR : "+ ex.getMessage());
         }*/
-        log.info("sending payload='%s' to topic='%s'", notification, TOPIC);
+        log.info("sending payload => {} to topic => {}", notification, TOPIC);
         kafkaTemplate.send(TOPIC, notification);
     }
 
