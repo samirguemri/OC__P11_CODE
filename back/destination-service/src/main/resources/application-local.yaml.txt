@@ -6,9 +6,9 @@ spring:
       client:
         config:
           hospitalClient:
-            url: http://hospital:8000
+            url: http://localhost:8000
           notificationClient:
-            url: http://notification:8090
+            url: http://localhost:8090
 
 server:
   port: 8443 #8081 for http connections with redirection

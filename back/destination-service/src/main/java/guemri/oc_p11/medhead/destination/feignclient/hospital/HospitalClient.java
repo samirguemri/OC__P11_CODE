@@ -9,7 +9,7 @@ import java.util.List;
 
 @FeignClient(
         name = "hospital-client",
-        url = "http://hospital:8000",
+        url = "${spring.cloud.openfeign.client.config.hospitalClient.url}",
         path = "api/v1/hospitals"
 )
 public interface HospitalClient {

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "notification-client",
-        url = "http://notification:8090",
+        url = "${spring.cloud.openfeign.client.config.notificationClient.url}",
         path = "api/v1/notification"
 )
 public interface NotificationClient {
