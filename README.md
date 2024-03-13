@@ -111,39 +111,39 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
    - **spaciality-service**
 
-      exécuter les commandes
+     exécuter les commandes
 
-      ```
-      $ mv back/speciality-service/src/main/resources/application.yaml back/speciality-service/src/main/resources/application.yaml.txt
-      $ mv back/speciality-service/src/main/resources/application_local.yaml.txt back/speciality-service/src/main/resources/application_local.yaml
-      ```
+     ```
+     $ mv back/speciality-service/src/main/resources/application.yaml back/speciality-service/src/main/resources/application.yaml.txt
+     $ mv back/speciality-service/src/main/resources/application-local.yaml.txt back/speciality-service/src/main/resources/application-local.yaml
+     ```
 
    - **hospital-service**
 
-      exécuter les commandes
+     exécuter les commandes
 
-      ```
-      $ mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
-      $ mv back/hospital-service/src/main/resources/application_local.yaml.txt back/hospital-service/src/main/resources/application_local.yaml
-      ```
+     ```
+     $ mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
+     $ mv back/hospital-service/src/main/resources/application-local.yaml.txt back/hospital-service/src/main/resources/application-local.yaml
+     ```
 
    - **notification-service**
 
-      exécuter les commandes
+     exécuter les commandes
 
-      ```
-      $ mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
-      $ mv back/notification-service/src/main/resources/application_local.yaml.txt back/notification-service/src/main/resources/application_local.yaml
-      ```
+     ```
+     $ mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
+     $ mv back/notification-service/src/main/resources/application-local.yaml.txt back/notification-service/src/main/resources/application-local.yaml
+     ```
 
    - **medhead-ui**
 
-      exécuter les commandes
+     exécuter les commandes
 
-      ```
-      $ mv front/medhead-ui/src/setupProxy.js front/medhead-ui/src/setupProxy.js.txt
-      $ mv front/medhead-ui/src/setupProxy_local.js.txt front/medhead-ui/src/setupProxy_local.js
-      ```
+     ```
+     $ mv front/medhead-ui/src/setupProxy.js front/medhead-ui/src/setupProxy.js.txt
+     $ mv front/medhead-ui/src/setupProxy-local.js.txt front/medhead-ui/src/setupProxy-local.js
+     ```
 
 3. Démarrer MongoDB
 
@@ -189,68 +189,44 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder speciality-service
+   2. Builder et exécuter speciality-service
 
    ```
    $ cd back/speciality-service
-   $ mvn clean install
-   ```
-
-   3. Executer `speciality-service`
-
-   ```
-   $ java -jar target/speciality-service-1.0.0-SNAPSHOT.jar
+   $ mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **hospital-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder hospital-service
+   2. Builder et exécuter hospital-service
 
    ```
    $ cd back/hospital-service
-   $ mvn clean install
-   ```
-
-   3. Executer `hospital-service`
-
-   ```
-   $ java -jar target/hospital-service-1.0.0-SNAPSHOT.jar
+   $ mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **destination-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder destination-service
+   2. Builder et exécuter destination-service
 
    ```
    $ cd back/destination-service
-   $ mvn clean install
-   ```
-
-   3. Executer `destination-service`
-
-   ```
-   $ java -jar target/destination-service-1.0.0-SNAPSHOT.jar
+   $ mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **notification-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder notification-service
+   2. Builder et exécuter notification-service
 
    ```
    $ cd back/notification-service
-   $ mvn clean install
-   ```
-
-   3. Executer `notification-service`
-
-   ```
-   $ java -jar target/notification-service-1.0.0-SNAPSHOT.jar
+   $ mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **medhead-ui**
