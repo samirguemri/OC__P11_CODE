@@ -88,7 +88,7 @@ class DestinationApplicationIntegrationTests {
         NotificationRequest notificationRequest = NotificationRequest.builder()
                 .hospitalRef("123")
                 .speciality("Anesthesie")
-                .number(1)
+                .bedToReserve(1)
                 .build();
 
         this.notificationService.stubFor(post(urlEqualTo("/api/v1/notification/send"))

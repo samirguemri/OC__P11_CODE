@@ -60,7 +60,7 @@ class NotificationApplicationIntegrationTests {
 
         NotificationRequest notificationRequest = NotificationRequest.builder()
                 .hospitalRef("123")
-                .specialityCode("456")
+                .speciality("456")
                 .bedToReserve(1)
                 .build();
 

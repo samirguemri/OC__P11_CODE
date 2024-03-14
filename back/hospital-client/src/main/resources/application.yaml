@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: hospital-client
+  kafka:
+    producer:
+      bootstrap-servers: kafka:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      bootstrap-servers: kafka:9092
+      group-id: medhead-2
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: guemri.oc_p11.medhead.notification.dto
+  data:
+    mongodb:
+      ## méthode 1 : docker
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      port: 27017
+      host: mongodb
+      database: medhead
+
+server:
+  port: 7000

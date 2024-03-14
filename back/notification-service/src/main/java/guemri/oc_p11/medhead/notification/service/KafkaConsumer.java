@@ -1,9 +1,9 @@
 package guemri.oc_p11.medhead.notification.service;
 
+import guemri.oc_p11.medhead.notification.dto.NotificationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -13,16 +13,16 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class KafkaConsumer {
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
-
     private CountDownLatch latch = new CountDownLatch(1);
     private String payload;
 
-    @KafkaListener(topics = "hospitalReservation")
-    public void receive(ConsumerRecord<?, ?> consumerRecord) {
-        log.info("received payload => {}", consumerRecord.toString());
+    @KafkaListener(topics = {"hospitalReservation"}, groupId = "medhead")
+    public void receive(ConsumerRecord<String, NotificationRequest> consumerRecord) {
         payload = consumerRecord.toString();
         latch.countDown();
+        log.info("==> received payload => {}", consumerRecord);
+        NotificationRequest notification = consumerRecord.value();
+        System.out.println("==> received notification => " + notification.hospitalRef() + " " + notification.bedToReserve());
     }
 
     public void resetLatch() {
@@ -36,5 +36,6 @@ public class KafkaConsumer {
     public CountDownLatch getLatch() {
         return latch;
     }
+
 
 }

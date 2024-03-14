@@ -44,8 +44,8 @@ L'application est composée de 5 services qui communiqueront entre eux :
 1. Cloner le projet en local
 
    ```
-    $ git clone https://github.com/samirguemri/OC__P11_CODE.git
-    $ cd OC__P11_CODE
+    git clone https://github.com/samirguemri/OC__P11_CODE.git
+    cd OC__P11_CODE
    ```
 
 2. Créer et éxecuter des containers
@@ -53,7 +53,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
 
    ```
-   $ docker compose up -d --build
+   docker compose up -d --build
    ```
 
    **mongodb**
@@ -61,16 +61,16 @@ L'application est composée de 5 services qui communiqueront entre eux :
    - Depuis un terminal, executer les commandes suivantes
 
    ```
-   $ docker cp resources/medhead.hospital.json mongodb:medhead.hospital.json
-   $ docker cp resources/medhead.speciality.json mongodb:medhead.speciality.json
-   $ docker exec -it mongodb sh
+   docker cp resources/medhead.hospital.json mongodb:medhead.hospital.json
+   docker cp resources/medhead.speciality.json mongodb:medhead.speciality.json
+   docker exec -it mongodb sh
    ```
 
    - Importer les spécialités et les hôpitaux dans mongodb
 
    ```
-   $ mongoimport --db medhead --collection hospital --authenticationDatabase admin --username rootuser --password rootpass --file medhead.hospital.json --jsonArray
-   $ mongoimport --db medhead --collection speciality --authenticationDatabase admin --username rootuser --password rootpass --file medhead.speciality.json --jsonArray
+   mongoimport --db medhead --collection hospital --authenticationDatabase admin --username rootuser --password rootpass --file medhead.hospital.json --jsonArray
+   mongoimport --db medhead --collection speciality --authenticationDatabase admin --username rootuser --password rootpass --file medhead.speciality.json --jsonArray
    ```
 
    **notification-service**
@@ -78,13 +78,13 @@ L'application est composée de 5 services qui communiqueront entre eux :
    Depuis un terminal, executer la commande suivante
 
    ```
-   $ docker exec -it kafka bash
+   docker exec -it kafka bash
    ```
 
    ensuite, executer la commande suivante depuis le `bash`
 
    ```
-   $ kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+   kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
    ```
 
 ### Méthode 2 : Builder et éxecuter en local (quelques adaptations à faire)
@@ -92,7 +92,6 @@ L'application est composée de 5 services qui communiqueront entre eux :
 #### Prérequis
 
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
-- [`Docker`](https://docs.docker.com/get-docker/)
 - [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`MongDB`](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu)
@@ -108,6 +107,33 @@ L'application est composée de 5 services qui communiqueront entre eux :
    ```
 
 2. Adapter les applications pour éxecuter en local
+
+   - **notification-service**
+
+     exécuter les commandes
+
+     ```
+     mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
+     mv back/notification-service/src/main/resources/application-local.yaml.txt back/notification-service/src/main/resources/application-local.yaml
+     ```
+
+   - **destination-service**
+
+     exécuter les commandes
+
+     ```
+     mv back/destination-service/src/main/resources/application.yaml back/destination-service/src/main/resources/application.yaml.txt
+     mv back/destination-service/src/main/resources/application-local.yaml.txt back/destination-service/src/main/resources/application-local.yaml
+     ```
+
+   - **hospital-client**
+
+     exécuter les commandes
+
+     ```
+     mv back/hospital-client/src/main/resources/application.yaml back/hospital-client/src/main/resources/application.yaml.txt
+     mv back/hospital-client/src/main/resources/application-local.yaml.txt back/hospital-client/src/main/resources/application-local.yaml
+     ```
 
    - **spaciality-service**
 
@@ -125,24 +151,6 @@ L'application est composée de 5 services qui communiqueront entre eux :
      ```
      mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
      mv back/hospital-service/src/main/resources/application-local.yaml.txt back/hospital-service/src/main/resources/application-local.yaml
-     ```
-
-   - **destination-service**
-
-     exécuter les commandes
-
-     ```
-     mv back/destination-service/src/main/resources/application.yaml back/destination-service/src/main/resources/application.yaml.txt
-     mv back/destination-service/src/main/resources/application-local.yaml.txt back/destination-service/src/main/resources/application-local.yaml
-     ```
-
-   - **notification-service**
-
-     exécuter les commandes
-
-     ```
-     mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
-     mv back/notification-service/src/main/resources/application-local.yaml.txt back/notification-service/src/main/resources/application-local.yaml
      ```
 
    - **medhead-ui**
