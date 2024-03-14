@@ -185,6 +185,9 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
    ```
    bin/zookeeper-server-start.sh config/zookeeper.properties
+   ```
+
+   ```
    bin/kafka-server-start.sh config/server.properties
    ```
 
@@ -201,6 +204,29 @@ L'application est composée de 5 services qui communiqueront entre eux :
    ```
 
 5. Builder les applications
+
+   **notification-service**
+
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+   2. Builder et exécuter notification-service
+
+   ```
+   cd back/notification-service
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
+   ```
+
+   **hospital-client**
+
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+   2. Builder et exécuter hospital-client
+
+   ```
+   cd back/hospital-client
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
+   ```
+
 
    **speciality-service**
 
@@ -232,17 +258,6 @@ L'application est composée de 5 services qui communiqueront entre eux :
 
    ```
    cd back/destination-service
-   mvn spring-boot:run -Dspring-boot.run.profiles=local
-   ```
-
-   **notification-service**
-
-   1. Ouvrir un nouveau terminal dans le dossier root du projet
-
-   2. Builder et exécuter notification-service
-
-   ```
-   cd back/notification-service
    mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
