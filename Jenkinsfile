@@ -62,7 +62,6 @@ pipeline {
         }
 
         stage('================ Sonarqube Analysis ================') {
-            sh 'echo Code Quality Analysis'
             // TODO : Analyse code with Sonarqube (hors scope PoC)
         }
 
