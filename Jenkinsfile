@@ -64,7 +64,7 @@ pipeline {
         stage('================ Sonarqube Analysis ================') {
             steps {
                 script {
-                    sh 'Analyse code with Sonarqube'
+                    sh 'echo Analyse code with Sonarqube'
                     // TODO : Analyse code with Sonarqube (hors scope PoC)
                 }
             }
