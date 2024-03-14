@@ -61,15 +61,6 @@ pipeline {
             }
         }
 
-        stage('================ Sonarqube Analysis ================') {
-            steps {
-                script {
-                    sh 'echo Analyse code with Sonarqube'
-                    // TODO : Analyse code with Sonarqube (hors scope PoC)
-                }
-            }
-        }
-
         stage("================ Build & Push Docker images ================") {
             steps {
                 script {
@@ -112,15 +103,6 @@ pipeline {
                             docker_image.push('latest')
                         }
                     }
-                }
-            }
-        }
-
-        stage('================ Trigger CD Pipeline ================') {
-            steps {
-                script {
-                    sh 'echo Trigger CD Pipeline'
-                    // TODO : Trigger CD Pipeline (hors scope PoC)
                 }
             }
         }
