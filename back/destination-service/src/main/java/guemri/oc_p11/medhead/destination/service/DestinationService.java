@@ -78,7 +78,9 @@ public record DestinationService(
         HospitalResponse selectedHospital = hospitalResponses.get(nearestHospital.destinationIndex());
 
         // Send notification to the hospital
-        ResponseEntity<String> response = notificationClient.sendNotification(buildNotificationRequest(selectedHospital.hospitalRef(), destinationRequest.speciality()));
+        NotificationRequest notificationRequest = buildNotificationRequest(selectedHospital.hospitalRef(), destinationRequest.speciality());
+        log.info("NoificationRequest to be send to notification-service => {}", notificationRequest);
+        ResponseEntity<String> response = notificationClient.sendNotification(notificationRequest);
         if (response.getStatusCode().is2xxSuccessful()) {
             log.info("Notification sent to the selected hospital {}", selectedHospital);
         } else {
@@ -91,7 +93,7 @@ public record DestinationService(
         return NotificationRequest.builder()
                 .hospitalRef(hospitalRef)
                 .speciality(speciality)
-                .number(1)
+                .bedToReserve(1)
                 .build();
     }
 }

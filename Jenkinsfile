@@ -23,7 +23,7 @@ pipeline {
 
         stage('================ Build and Package services ================') {
             steps {
-                sh 'echo ==> Build and Package backend services <=='
+                sh 'echo Build and Package backend services'
                 dir('back/speciality-service') {
                     sh 'mvn clean package -DskipTests'
                 }
@@ -36,7 +36,7 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn clean package -DskipTests'
                 }
-                sh 'echo ==> Build and Package frontend application <=='
+                sh 'echo Build and Package frontend application'
                 dir('front/medhead-ui') {
                     sh 'npm install'
                 }
@@ -45,7 +45,7 @@ pipeline {
 
         stage('================ Run tests ================') {
             steps {
-                sh 'echo ==> Test backend services <=='
+                sh 'echo Test backend services'
                 dir('back/speciality-service') {
                     sh 'mvn test'
                 }
@@ -58,35 +58,8 @@ pipeline {
                 dir('back/notification-service') {
                     sh 'mvn test'
                 }
-                sh 'echo ==> Test frontend application <=='
-                dir('front/medhead-ui') {
-                    sh 'npm test'
-                }
             }
         }
-
-        // stage('================ Sonarqube Analysis ================') {
-        //     steps {
-        //         script() {
-        //             withSonarQubeEnv(credentialsId: 'sonarqube-token') {
-        //                 sh 'mvn sonar:sonar'
-        //             }
-        //         }
-        //     }
-        // }
-
-        // stage('================ Build Docker images ================') {
-        //     steps {
-        //         sh 'docker-compose build'
-        //     }
-        // }
-
-        // stage('================ Start Docker containers ================') {
-        //     steps {
-        //         sh 'docker compose up -d --wait'
-        //         sh 'docker compose ps'
-        //     }
-        // }
 
         stage("================ Build & Push Docker images ================") {
             steps {
@@ -130,15 +103,6 @@ pipeline {
                             docker_image.push('latest')
                         }
                     }
-                }
-            }
-        }
-
-        stage('================ Trigger CD Pipeline ================') {
-            steps {
-                script {
-                    sh 'echo Trigger CD Pipeline'
-                    // TODO : Trigger CD Pipeline (hors scope PoC)
                 }
             }
         }

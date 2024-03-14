@@ -44,8 +44,8 @@ L'application est composée de 5 services qui communiqueront entre eux :
 1. Cloner le projet en local
 
    ```
-    $ git clone https://github.com/samirguemri/OC__P11_CODE.git
-    $ cd OC__P11_CODE
+    git clone https://github.com/samirguemri/OC__P11_CODE.git
+    cd OC__P11_CODE
    ```
 
 2. Créer et éxecuter des containers
@@ -53,7 +53,7 @@ L'application est composée de 5 services qui communiqueront entre eux :
    Ouvrir un `terminal` et, depuis le dossier root qui contient le fichier docker-compose.yaml, executer la commande
 
    ```
-   $ docker compose up -d --build
+   docker compose up -d --build
    ```
 
    **mongodb**
@@ -61,16 +61,16 @@ L'application est composée de 5 services qui communiqueront entre eux :
    - Depuis un terminal, executer les commandes suivantes
 
    ```
-   $ docker cp resources/medhead.hospital.json mongodb:medhead.hospital.json
-   $ docker cp resources/medhead.speciality.json mongodb:medhead.speciality.json
-   $ docker exec -it mongodb sh
+   docker cp resources/medhead.hospital.json mongodb:medhead.hospital.json
+   docker cp resources/medhead.speciality.json mongodb:medhead.speciality.json
+   docker exec -it mongodb sh
    ```
 
    - Importer les spécialités et les hôpitaux dans mongodb
 
    ```
-   $ mongoimport --db medhead --collection hospital --authenticationDatabase admin --username rootuser --password rootpass --file medhead.hospital.json --jsonArray
-   $ mongoimport --db medhead --collection speciality --authenticationDatabase admin --username rootuser --password rootpass --file medhead.speciality.json --jsonArray
+   mongoimport --db medhead --collection hospital --authenticationDatabase admin --username rootuser --password rootpass --file medhead.hospital.json --jsonArray
+   mongoimport --db medhead --collection speciality --authenticationDatabase admin --username rootuser --password rootpass --file medhead.speciality.json --jsonArray
    ```
 
    **notification-service**
@@ -78,13 +78,13 @@ L'application est composée de 5 services qui communiqueront entre eux :
    Depuis un terminal, executer la commande suivante
 
    ```
-   $ docker exec -it kafka bash
+   docker exec -it kafka bash
    ```
 
    ensuite, executer la commande suivante depuis le `bash`
 
    ```
-   $ kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
+   kafka-console-consumer --topic hospitalReservation --bootstrap-server kafka:9092
    ```
 
 ### Méthode 2 : Builder et éxecuter en local (quelques adaptations à faire)
@@ -92,7 +92,6 @@ L'application est composée de 5 services qui communiqueront entre eux :
 #### Prérequis
 
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
-- [`Docker`](https://docs.docker.com/get-docker/)
 - [`Maven`](https://maven.apache.org/install.html)
 - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [`MongDB`](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu)
@@ -103,137 +102,163 @@ L'application est composée de 5 services qui communiqueront entre eux :
 1. Cloner le projet en local
 
    ```
-   $ git clone https://github.com/samirguemri/OC__P11_CODE.git
-   $ cd OC__P11_CODE
+   git clone https://github.com/samirguemri/OC__P11_CODE.git
+   cd OC__P11_CODE
    ```
 
 2. Adapter les applications pour éxecuter en local
 
-   - Dans le fichier `back > spaciality-service > src > main > resources > application.yaml`
+   - **notification-service**
 
-     - _Commenter les lignes 7 à 12_ et
-     - _décommenter les lignes 14 à 17_
+     exécuter les commandes
 
-   - Dans le fichier `back > hospital-service > src > main > resources > application.yaml`
+     ```
+     mv back/notification-service/src/main/resources/application.yaml back/notification-service/src/main/resources/application.yaml.txt
+     mv back/notification-service/src/main/resources/application-local.yaml.txt back/notification-service/src/main/resources/application-local.yaml
+     ```
 
-     - _Commenter les lignes 7 à 12_ et
-     - _décommenter les lignes 14 à 17_
+   - **destination-service**
 
-   - Dans le fichier `back > notification-service > src > main > resources > application.yaml`
+     exécuter les commandes
 
-     - _Commenter les lignes 9 à 18_ et
-     - _décommenter les lignes 20 à 29_
+     ```
+     mv back/destination-service/src/main/resources/application.yaml back/destination-service/src/main/resources/application.yaml.txt
+     mv back/destination-service/src/main/resources/application-local.yaml.txt back/destination-service/src/main/resources/application-local.yaml
+     ```
 
-   - Dans le fichier `front > medhead-ui > src > setupProxy.js`
-     - _Commenter les lignes 7 et 17_ et
-     - _décommenter les lignes 8 et 18_
+   - **hospital-client**
+
+     exécuter les commandes
+
+     ```
+     mv back/hospital-client/src/main/resources/application.yaml back/hospital-client/src/main/resources/application.yaml.txt
+     mv back/hospital-client/src/main/resources/application-local.yaml.txt back/hospital-client/src/main/resources/application-local.yaml
+     ```
+
+   - **spaciality-service**
+
+     exécuter les commandes
+
+     ```
+     mv back/speciality-service/src/main/resources/application.yaml back/speciality-service/src/main/resources/application.yaml.txt
+     mv back/speciality-service/src/main/resources/application-local.yaml.txt back/speciality-service/src/main/resources/application-local.yaml
+     ```
+
+   - **hospital-service**
+
+     exécuter les commandes
+
+     ```
+     mv back/hospital-service/src/main/resources/application.yaml back/hospital-service/src/main/resources/application.yaml.txt
+     mv back/hospital-service/src/main/resources/application-local.yaml.txt back/hospital-service/src/main/resources/application-local.yaml
+     ```
+
+   - **medhead-ui**
+
+     exécuter les commandes
+
+     ```
+     mv front/medhead-ui/src/setupProxy.js front/medhead-ui/src/setupProxy-docker.js.txt
+     mv front/medhead-ui/src/setupProxy-local.js.txt front/medhead-ui/src/setupProxy.js
+     ```
 
 3. Démarrer MongoDB
 
    Démarrer le daemon mongod
 
    ```
-   $ sudo systemctl start mongod
+   sudo systemctl start mongod
    ```
 
    Importer les spécialités et les hôpitaux dans mongodb
 
    ```
-   $ mongoimport --db medhead --collection hospital --file resources/medhead.hospital.json --jsonArray
-   $ mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
+   mongoimport --db medhead --collection hospital --file resources/medhead.hospital.json --jsonArray
+   mongoimport --db medhead --collection speciality --file resources/medhead.speciality.json --jsonArray
    ```
 
 4. Démarrer kafka
 
    Depuis le dossier d'installation de kafka :
 
-   - Démarrer le `zookeeper` et le `Kafka broker`
+   - Démarrer le `zookeeper` et le `Kafka broker` dans deux Terminal diférents
 
    ```
-   $ bin/zookeeper-server-start.sh config/zookeeper.properties
-   $ bin/kafka-server-start.sh config/server.properties
+   bin/zookeeper-server-start.sh config/zookeeper.properties
+   ```
+
+   ```
+   bin/kafka-server-start.sh config/server.properties
    ```
 
    - Créer le TOPIC `hospitalReservation`
 
    ```
-   $ bin/kafka-topics.sh --create --topic hospitalReservation --bootstrap-server localhost:9092
+   bin/kafka-topics.sh --create --topic hospitalReservation --bootstrap-server localhost:9092
    ```
 
    - Se connecter au `kafka-console-consumer` pour visualiser les notification
 
    ```
-   $ bin/kafka-console-consumer.sh --topic hospitalReservation --bootstrap-server localhost:9092
+   bin/kafka-console-consumer.sh --topic hospitalReservation --bootstrap-server localhost:9092
    ```
 
 5. Builder les applications
+
+   **notification-service**
+
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+   2. Builder et exécuter notification-service
+
+   ```
+   cd back/notification-service
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
+   ```
+
+   **hospital-client**
+
+   1. Ouvrir un nouveau terminal dans le dossier root du projet
+
+   2. Builder et exécuter hospital-client
+
+   ```
+   cd back/hospital-client
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
+   ```
+
 
    **speciality-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder speciality-service
+   2. Builder et exécuter speciality-service
 
    ```
-   $ cd back/speciality-service
-   $ mvn clean install
-   ```
-
-   3. Executer `speciality-service`
-
-   ```
-   $ java -jar target/speciality-service-1.0.0-SNAPSHOT.jar
+   cd back/speciality-service
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **hospital-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder hospital-service
+   2. Builder et exécuter hospital-service
 
    ```
-   $ cd back/hospital-service
-   $ mvn clean install
-   ```
-
-   3. Executer `hospital-service`
-
-   ```
-   $ java -jar target/hospital-service-1.0.0-SNAPSHOT.jar
+   cd back/hospital-service
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **destination-service**
 
    1. Ouvrir un nouveau terminal dans le dossier root du projet
 
-   2. Builder destination-service
+   2. Builder et exécuter destination-service
 
    ```
-   $ cd back/destination-service
-   $ mvn clean install
-   ```
-
-   3. Executer `destination-service`
-
-   ```
-   $ java -jar target/destination-service-1.0.0-SNAPSHOT.jar
-   ```
-
-   **notification-service**
-
-   1. Ouvrir un nouveau terminal dans le dossier root du projet
-
-   2. Builder notification-service
-
-   ```
-   $ cd back/notification-service
-   $ mvn clean install
-   ```
-
-   3. Executer `notification-service`
-
-   ```
-   $ java -jar target/notification-service-1.0.0-SNAPSHOT.jar
+   cd back/destination-service
+   mvn spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
    **medhead-ui**
@@ -243,14 +268,14 @@ L'application est composée de 5 services qui communiqueront entre eux :
    2. Builder medhead-ui
 
    ```
-   $ cd front/medhead-ui
-   $ npm install
+   cd front/medhead-ui
+   npm install
    ```
 
    3. Lancer `medhead-ui`
 
    ```
-   $ npm start
+   npm start
    ```
 
 ### Tester l'application
@@ -288,8 +313,8 @@ L'application est composée de 5 services qui communiqueront entre eux :
   - Depuis le dossier d'installation de JMeter
 
   ```
-  $ cd bin
-  $ sh jmeter.sh
+  cd bin
+  sh jmeter.sh
   ```
 
 ## Le workflow et la stratégie des branches
@@ -315,7 +340,7 @@ Le wokflow choisie est le GitFlow.
 
 ## Déploiement des applications
 
-Le process complet de la pipeline CI/CD. _Plus de détail dans le repository d'architecture._
+Le process complet de la pipeline CI/CD.
 
 ![ci-cd-pipeline](resources/images/medhead-Pipeline.drawio.png)
 
@@ -339,7 +364,7 @@ Après la mise à jour du répertoire GitHub DevOps, la pipeline DC sera déclan
 
 - Arrêter les `containers`
   ```
-  $ docker compose down
+  docker compose down
   ```
 
 ### localhost
@@ -351,7 +376,7 @@ Après la mise à jour du répertoire GitHub DevOps, la pipeline DC sera déclan
 - Arrêter mongodb
 
   ```
-  $ sudo systemctl stop mongod
+  sudo systemctl stop mongod
   ```
 
 - Arrêter kafka
