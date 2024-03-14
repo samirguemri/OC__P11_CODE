@@ -62,7 +62,12 @@ pipeline {
         }
 
         stage('================ Sonarqube Analysis ================') {
-            // TODO : Analyse code with Sonarqube (hors scope PoC)
+            steps {
+                script {
+                    sh 'Analyse code with Sonarqube'
+                    // TODO : Analyse code with Sonarqube (hors scope PoC)
+                }
+            }
         }
 
         stage("================ Build & Push Docker images ================") {
